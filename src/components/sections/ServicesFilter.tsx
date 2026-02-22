@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,27 +8,35 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Filter } from "lucide-react";
-import type { Service } from "@/lib/types";
 
-type FilterOption =
+export type FilterOption =
   | "all"
+  | "overview"
   | "editing"
   | "data"
+  | "public"
   | "planning"
   | "presentations";
 
-export function ServicesFilter({ services }: { services: Service[] }) {
-  const [selectedFilter, setSelectedFilter] =
-    useState<FilterOption>("all");
+const filterOptions: { value: FilterOption; label: string }[] = [
+  { value: "all", label: "All Services" },
+  { value: "overview", label: "Service Overview" },
+  { value: "editing", label: "Editing Support" },
+  { value: "data", label: "Data Services" },
+  { value: "planning", label: "Research Planning" },
+  { value: "public", label: "Publications Support" },
+  { value: "presentations", label: "Academic Presentation" },
+];
 
-  const filterOptions: { value: FilterOption; label: string }[] = [
-    { value: "all", label: "All Services" },
-    { value: "editing", label: "Editing Support" },
-    { value: "data", label: "Data Services" },
-    { value: "planning", label: "Research Planning" },
-    { value: "presentations", label: "Presentations" },
-  ];
+type ServicesFilterProps = {
+  selectedFilter: FilterOption;
+  onFilterChange: (value: FilterOption) => void;
+};
 
+export function ServicesFilter({
+  selectedFilter,
+  onFilterChange,
+}: ServicesFilterProps) {
   const getFilterLabel = () => {
     return (
       filterOptions.find((opt) => opt.value === selectedFilter)?.label ||
@@ -42,7 +49,7 @@ export function ServicesFilter({ services }: { services: Service[] }) {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="inline-flex items-center gap-2 rounded-full border border-[rgba(221,230,236,.95)] bg-[rgba(255,255,255,.92)] px-4 py-2.5 text-sm font-semibold text-[var(--ink)] shadow-[0_10px_20px_rgba(20,35,45,.08)] hover:bg-white"
+          className="inline-flex items-center gap-2 rounded-full border border-[#1F3A5F] bg-[#1F3A5F] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_10px_20px_rgba(20,35,45,.08)] hover:bg-[#162b46]"
         >
           <Filter className="h-4 w-4" />
           <span>{getFilterLabel()}</span>
@@ -53,12 +60,11 @@ export function ServicesFilter({ services }: { services: Service[] }) {
         {filterOptions.map((option) => (
           <DropdownMenuItem
             key={option.value}
-            onClick={() => setSelectedFilter(option.value)}
-            className={`cursor-pointer ${
-              selectedFilter === option.value
+            onClick={() => onFilterChange(option.value)}
+            className={`cursor-pointer ${selectedFilter === option.value
                 ? "bg-[rgba(47,111,104,.10)] font-semibold"
                 : ""
-            }`}
+              }`}
           >
             {option.label}
           </DropdownMenuItem>

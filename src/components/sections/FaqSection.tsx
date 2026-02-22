@@ -85,65 +85,62 @@ export function FaqSection() {
 
   return (
     <section
-      className="py-8 md:py-14"
+      className="section-pad"
       style={{
         background:
-          "radial-gradient(1100px 520px at 20% -10%, rgba(14, 165, 164, .12), transparent 60%), radial-gradient(900px 520px at 90% -10%, rgba(11, 45, 92, .10), transparent 55%), #f6f9fe",
+          "radial-gradient(1100px 520px at 20% -10%, rgba(168,199,230,.26), transparent 60%), radial-gradient(900px 520px at 90% -10%, rgba(63,127,114,.14), transparent 55%), linear-gradient(180deg, rgba(255,255,255,.98), rgba(233,227,213,.45))",
       }}
     >
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
+      <div className="mx-auto max-w-7xl px-6">
         <div className="mb-8">
-          <div className="mb-2.5 text-xs uppercase tracking-[0.22em] text-[rgba(82,96,121,.9)]">
-            Frequently asked questions
+          <div className="mb-2.5 text-xs uppercase tracking-[0.22em] text-[#2A2E35]/70">
+            FREQUENTLY ASKED QUESTIONS
           </div>
           <h2 className="m-0 mb-2.5 text-3xl font-bold leading-[1.1] tracking-[-0.02em] md:text-[34px]">
             Common questions before you book with us.
           </h2>
-          <p className="mt-2.5 max-w-[78ch] text-[15px] leading-relaxed text-[#526079]">
-            Clear answers on ethics, process, AI/similarity, and journal
-            selection - so you can decide with confidence.
-          </p>
+          <p className="mt-2.5 max-w-[80ch] text-[15px] leading-relaxed text-[#2A2E35]/80">Clear answers on ethics, process, AI/similarity, and journal selection - so you can decide with confidence.</p>
         </div>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-[280px_1fr]">
           <aside className="h-fit lg:sticky lg:top-6">
-            <div className="rounded-[18px] border border-[rgba(215,223,236,.95)] bg-white p-5 shadow-[0_10px_22px_rgba(11,27,51,.08)]">
-              <p className="mb-2 text-sm font-semibold text-[#0b1220]">
+            <div className="rounded-[18px] border border-[#A8C7E6]/60 bg-white p-5 shadow-[0_10px_22px_rgba(11,27,51,.08)]">
+              <p className="mb-2 text-sm font-semibold text-[#2A2E35]">
                 Still unsure?
               </p>
-              <p className="mb-4 text-sm text-[#526079]">
+              <p className="mb-4 text-sm text-[#2A2E35]/80">
                 Use the quick routes below. No confusing hand-offs - clear next
                 steps.
               </p>
               <div className="flex flex-col gap-2.5">
                 <Button
                   asChild
-                  className="rounded-full bg-gradient-to-br from-[#0b3c71] to-[#132644] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:shadow-lg"
+                  className="rounded-full bg-[#1F3A5F] px-4 py-2.5 text-sm font-semibold text-white transition-all hover:shadow-lg"
                 >
                   <Link href="/contact">Book 1:1 Expert Call</Link>
                 </Button>
                 <Button
                   variant="outline"
-                  className="rounded-full border-[rgba(215,223,236,.95)] bg-white px-4 py-2.5 text-sm font-semibold text-[#0b3c71] hover:bg-[#e4edf8]"
+                  className="rounded-full border-[#A8C7E6]/60 bg-white px-4 py-2.5 text-sm font-semibold text-[#1F3A5F] hover:bg-[#E9E3D5]"
                   asChild
                 >
                   <Link href="/services">See Editing Sample</Link>
                 </Button>
               </div>
               <div className="mt-4 flex flex-wrap gap-2 text-xs">
-                <div className="flex items-center gap-1.5 rounded-full border border-[rgba(215,223,236,.95)] bg-[rgba(238,243,251,.7)] px-2.5 py-1.5 text-[#0b3a75]">
+                <div className="flex items-center gap-1.5 rounded-full border border-[#A8C7E6]/60 bg-[#A8C7E6]/20 px-2.5 py-1.5 text-[#1F3A5F]">
                   <Shield className="h-3.5 w-3.5" />
                   <span>COPE-aligned</span>
                 </div>
-                <div className="flex items-center gap-1.5 rounded-full border border-[rgba(215,223,236,.95)] bg-[rgba(238,243,251,.7)] px-2.5 py-1.5 text-[#0b3a75]">
+                <div className="flex items-center gap-1.5 rounded-full border border-[#A8C7E6]/60 bg-[#A8C7E6]/20 px-2.5 py-1.5 text-[#1F3A5F]">
                   <Ban className="h-3.5 w-3.5" />
                   <span>No ghostwriting</span>
                 </div>
-                <div className="flex items-center gap-1.5 rounded-full border border-[rgba(215,223,236,.95)] bg-[rgba(238,243,251,.7)] px-2.5 py-1.5 text-[#0b3a75]">
+                <div className="flex items-center gap-1.5 rounded-full border border-[#A8C7E6]/60 bg-[#A8C7E6]/20 px-2.5 py-1.5 text-[#1F3A5F]">
                   <Lock className="h-3.5 w-3.5" />
                   <span>NDA-friendly</span>
                 </div>
-                <div className="flex items-center gap-1.5 rounded-full border border-[rgba(215,223,236,.95)] bg-[rgba(238,243,251,.7)] px-2.5 py-1.5 text-[#0b3a75]">
+                <div className="flex items-center gap-1.5 rounded-full border border-[#A8C7E6]/60 bg-[#A8C7E6]/20 px-2.5 py-1.5 text-[#1F3A5F]">
                   <Receipt className="h-3.5 w-3.5" />
                   <span>Transparent quotes</span>
                 </div>
@@ -152,7 +149,7 @@ export function FaqSection() {
           </aside>
 
           <div>
-            <div className="rounded-t-[16px] border-b border-[rgba(215,223,236,.95)] bg-gradient-to-b from-white/90 to-[rgba(238,243,251,.55)] p-3">
+            <div className="rounded-t-[16px] border-b border-[#A8C7E6]/60 bg-gradient-to-b from-white/95 to-[#A8C7E6]/10 p-3">
               <div className="flex flex-wrap gap-2">
                 {categories.map((cat) => {
                   const Icon = cat.icon;
@@ -166,8 +163,8 @@ export function FaqSection() {
                       }}
                       className={`inline-flex items-center gap-2 rounded-full border px-2.5 py-2 text-xs font-bold transition-all ${
                         activeFilter === cat.id
-                          ? "border-[rgba(14,165,164,.35)] bg-[rgba(14,165,164,.10)] text-[#0b1220]"
-                          : "border-[rgba(215,223,236,.95)] bg-white/88 text-[#526079] hover:-translate-y-0.5 hover:border-[rgba(11,58,117,.25)] hover:text-[#0b1220]"
+                          ? "border-[#3F7F72]/45 bg-[#3F7F72]/10 text-[#1F3A5F]"
+                          : "border-[#A8C7E6]/60 bg-white/88 text-[#2A2E35]/80 hover:-translate-y-0.5 hover:border-[#3F7F72]/45 hover:text-[#1F3A5F]"
                       }`}
                       aria-pressed={activeFilter === cat.id}
                     >
@@ -188,8 +185,8 @@ export function FaqSection() {
                     key={index}
                     className={`overflow-hidden rounded-[16px] border transition-all ${
                       isOpen
-                        ? "border-[rgba(14,165,164,.35)] shadow-[0_18px_46px_rgba(14,165,164,.10)]"
-                        : "border-[rgba(215,223,236,.95)] bg-white/92 hover:-translate-y-0.5 hover:shadow-[0_10px_22px_rgba(11,27,51,.08)]"
+                        ? "border-[#3F7F72]/45 shadow-md"
+                        : "border-[#A8C7E6]/60 bg-white/92 hover:-translate-y-0.5 hover:shadow-xl"
                     }`}
                   >
                     <button
@@ -199,13 +196,13 @@ export function FaqSection() {
                       aria-expanded={isOpen}
                     >
                       <div className="flex items-start gap-2.5">
-                        <div className="mt-0.5 grid h-7 w-7 flex-shrink-0 place-items-center rounded-[10px] border border-[rgba(11,58,117,.12)] bg-[rgba(11,58,117,.08)]">
-                          <Icon className="h-4 w-4 text-[#0b3c71]" />
+                        <div className="mt-0.5 grid h-7 w-7 flex-shrink-0 place-items-center rounded-[10px] border border-[#A8C7E6]/60 bg-[#A8C7E6]/20">
+                          <Icon className="h-4 w-4 text-[#1F3A5F]" />
                         </div>
                         <div>
                           <span>{faq.question}</span>
-                          <div className="mt-1.5 flex flex-wrap gap-2 text-xs font-bold text-[#526079]">
-                            <span className="rounded-full border border-[rgba(215,223,236,.95)] bg-[rgba(238,243,251,.7)] px-2 py-1">
+                          <div className="mt-1.5 flex flex-wrap gap-2 text-xs font-bold text-[#2A2E35]/80">
+                            <span className="rounded-full border border-[#A8C7E6]/60 bg-[#A8C7E6]/20 px-2 py-1">
                               {categories.find((c) => c.id === faq.category)
                                 ?.label}
                             </span>
@@ -213,7 +210,7 @@ export function FaqSection() {
                         </div>
                       </div>
                       <div
-                        className={`grid h-8 w-8 flex-shrink-0 place-items-center rounded-full border border-[rgba(215,223,236,.95)] bg-white/90 transition-transform ${
+                        className={`grid h-8 w-8 flex-shrink-0 place-items-center rounded-full border border-[#A8C7E6]/60 bg-white/90 transition-transform ${
                           isOpen ? "rotate-180" : ""
                         }`}
                       >
@@ -222,7 +219,7 @@ export function FaqSection() {
                           height="18"
                           viewBox="0 0 24 24"
                           width="18"
-                          className="text-[#0b1b33]"
+                          className="text-[#1F3A5F]"
                         >
                           <path
                             d="M7 10l5 5 5-5"
@@ -235,14 +232,14 @@ export function FaqSection() {
                       </div>
                     </button>
                     {isOpen && (
-                      <div className="pl-[52px] px-3.5 pb-3.5 text-sm leading-relaxed text-[#526079]">
+                      <div className="pl-[52px] px-3.5 pb-3.5 text-sm leading-relaxed text-[#2A2E35]/80">
                         {faq.answer}
                         <div className="mt-2">
                           <Link
                             href={`#learn-${faq.category}`}
-                            className="font-extrabold text-[#0b3c71] hover:underline"
+                            className="font-extrabold text-[#1F3A5F] hover:text-[#3F7F72] hover:underline"
                           >
-                            Learn more →
+                            Learn more -&gt;
                           </Link>
                         </div>
                       </div>

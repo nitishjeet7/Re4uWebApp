@@ -1,0 +1,1115 @@
+.page {
+  --navy: #1f3a5f;
+  --teal: #3f7f72;
+  --ink: #2a2e35;
+  --paper: #f6f9ff;
+  --card: rgba(255, 255, 255, 0.8);
+  --stroke: rgba(31, 58, 95, 0.16);
+  --stroke-strong: rgba(31, 58, 95, 0.28);
+  --shadow: 0 16px 50px rgba(31, 58, 95, 0.1);
+
+  color: var(--ink);
+  background:
+    radial-gradient(900px 600px at 15% 0%, rgba(168, 199, 230, 0.24), transparent 55%),
+    radial-gradient(900px 600px at 85% 0%, rgba(31, 58, 95, 0.14), transparent 55%),
+    linear-gradient(180deg, #ffffff, var(--paper));
+  padding: 12px 0 64px;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 18px;
+}
+
+.section {
+  padding: 52px 0;
+}
+
+.sectionSoft {
+  background: rgba(255, 255, 255, 0.34);
+  border-top: 1px solid rgba(31, 58, 95, 0.06);
+  border-bottom: 1px solid rgba(31, 58, 95, 0.06);
+}
+
+.sectionHead {
+  margin-bottom: 16px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: clamp(1.7rem, 3.2vw, 2.25rem);
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+  color: rgba(31, 58, 95, 0.98);
+}
+
+.sectionSub {
+  margin: 8px 0 0;
+  max-width: 82ch;
+  color: rgba(42, 46, 53, 0.8);
+  line-height: 1.58;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  padding: 11px 15px;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btnPrimary {
+  background: linear-gradient(135deg, var(--teal), var(--navy));
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+
+.btnGhost {
+  background: rgba(255, 255, 255, 0.75);
+  border-color: var(--stroke);
+  color: rgba(31, 58, 95, 0.92);
+}
+
+.btnGhost:hover {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: var(--stroke-strong);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.74);
+  color: rgba(31, 58, 95, 0.9);
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--teal);
+}
+
+.btn:focus-visible,
+.pathTab:focus-visible,
+.selectorPill:focus-visible,
+.matchPill:focus-visible,
+.workflowTab:focus-visible,
+.navBtn:focus-visible,
+.modalDot:focus-visible,
+.field input:focus-visible,
+.field select:focus-visible,
+.fieldWide input:focus-visible,
+.fieldWide textarea:focus-visible,
+.faqItem summary:focus-visible {
+  outline: 2px solid rgba(31, 58, 95, 0.95);
+  outline-offset: 2px;
+}
+
+.hero {
+  padding: 18px 0 28px;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.heroCard,
+.heroSide,
+.pathPanel,
+.selectorWrap,
+.matcherWrap,
+.workflowWrap,
+.packageCard,
+.sampleCard,
+.resourceCard,
+.leadCard,
+.finalCta,
+.faqItem,
+.modalDialog {
+  border-radius: 24px;
+  border: 1px solid var(--stroke);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.heroCard {
+  padding: clamp(18px, 3.6vw, 30px);
+}
+
+.heroKicker {
+  margin: 0;
+  width: max-content;
+  border-radius: 999px;
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.74);
+  color: rgba(31, 58, 95, 0.92);
+  padding: 7px 11px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  margin: 12px 0 8px;
+  font-size: clamp(2rem, 4.3vw, 3rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: rgba(31, 58, 95, 0.98);
+}
+
+.heroSub {
+  margin: 0;
+  color: rgba(42, 46, 53, 0.82);
+  line-height: 1.6;
+  max-width: 70ch;
+}
+
+.heroActions {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.heroTrust {
+  margin-top: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.heroNote {
+  margin: 11px 0 0;
+  color: rgba(42, 46, 53, 0.8);
+}
+
+.heroSide {
+  padding: 16px;
+}
+
+.sideTitle {
+  margin: 2px 0 10px;
+  color: rgba(31, 58, 95, 0.96);
+  font-size: 1.05rem;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.kpiCard {
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.74);
+  padding: 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.kpiCard strong {
+  color: rgba(31, 58, 95, 0.96);
+  font-size: 1.1rem;
+}
+
+.kpiCard span {
+  color: rgba(42, 46, 53, 0.78);
+  line-height: 1.4;
+  font-size: 0.85rem;
+}
+
+.pathTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.pathTab {
+  border: 1px solid var(--stroke);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: rgba(31, 58, 95, 0.9);
+  padding: 10px 13px;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.pathTabActive {
+  background: linear-gradient(135deg, var(--teal), var(--navy));
+  border-color: transparent;
+  color: #fff;
+}
+
+.pathPanel {
+  margin-top: 12px;
+  padding: 16px;
+}
+
+.pathPanelGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.pathTitle {
+  margin: 10px 0 6px;
+  color: rgba(31, 58, 95, 0.96);
+  font-size: 1.2rem;
+}
+
+.pathSummary {
+  margin: 0;
+  color: rgba(42, 46, 53, 0.8);
+  line-height: 1.55;
+}
+
+.pathColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.pathColumns h4 {
+  margin: 0;
+  color: rgba(31, 58, 95, 0.94);
+}
+
+.pathColumns ul,
+.selectorPanel ul,
+.workflowPanel ul,
+.packageCard ul,
+.sampleCanvas ul {
+  margin: 8px 0 0;
+  padding-left: 19px;
+  color: rgba(42, 46, 53, 0.84);
+  line-height: 1.48;
+  display: grid;
+  gap: 6px;
+}
+
+.panelActions {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.selectorWrap {
+  padding: 15px;
+}
+
+.selectorTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.selectorHint {
+  margin: 0;
+  color: rgba(31, 58, 95, 0.92);
+  font-weight: 800;
+}
+
+.selectorCtas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.selectorRow {
+  margin-top: 11px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.selectorPill {
+  border: 1px solid var(--stroke);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: rgba(31, 58, 95, 0.9);
+  padding: 8px 12px;
+  font-size: 0.84rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.selectorPillActive {
+  background: linear-gradient(135deg, rgba(31, 58, 95, 0.95), rgba(22, 43, 70, 0.95));
+  border-color: transparent;
+  color: #fff;
+}
+
+.selectorDivider {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(31, 58, 95, 0.22);
+  margin: 0 4px;
+}
+
+.selectorPanel {
+  margin-top: 12px;
+  border: 1px solid var(--stroke);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.76);
+  padding: 14px;
+  animation: fadeIn 180ms ease;
+}
+
+.panelBadge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.82);
+  color: rgba(31, 58, 95, 0.95);
+  padding: 6px 10px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.selectorPanel h3,
+.matcherCard h3,
+.workflowPanel h3,
+.packageCard h3,
+.sampleCard h3,
+.resourceCard h3,
+.leadHead h3,
+.modalHead h3 {
+  margin: 10px 0 6px;
+  color: rgba(31, 58, 95, 0.96);
+}
+
+.selectorPanel p,
+.matcherCard p,
+.workflowPanel p,
+.packageCard p,
+.sampleCard p,
+.resourceCard p,
+.leadHead p,
+.modalHead p,
+.faqItem p {
+  margin: 0;
+  color: rgba(42, 46, 53, 0.8);
+  line-height: 1.54;
+}
+
+.panelMicro {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px dashed rgba(31, 58, 95, 0.2);
+  background: rgba(255, 255, 255, 0.68);
+  color: rgba(42, 46, 53, 0.82);
+  font-size: 0.88rem;
+}
+
+.selectorFoot {
+  margin-top: 11px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.matcherWrap,
+.workflowWrap,
+.finalCta {
+  padding: 16px;
+}
+
+.matcherStep + .matcherStep {
+  margin-top: 10px;
+}
+
+.matcherLabel {
+  margin: 0;
+  color: rgba(31, 58, 95, 0.9);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.matcherRow {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.matchPill {
+  border: 1px solid var(--stroke);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: rgba(31, 58, 95, 0.92);
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.matchPillSoft {
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.matchPillActive {
+  background: linear-gradient(135deg, var(--teal), var(--navy));
+  border-color: transparent;
+  color: #fff;
+}
+
+.matcherCard {
+  margin-top: 12px;
+  border: 1px solid var(--stroke);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.76);
+  padding: 14px;
+}
+
+.matcherTop {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.matcherMeta {
+  color: rgba(42, 46, 53, 0.74);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.matcherGrid {
+  margin-top: 11px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.matcherBox {
+  border: 1px solid var(--stroke);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 10px;
+}
+
+.matcherBox h4,
+.matcherExample h4,
+.sampleCanvas h4 {
+  margin: 0;
+  color: rgba(31, 58, 95, 0.93);
+  font-size: 0.86rem;
+}
+
+.matcherBox p,
+.matcherExample p {
+  margin-top: 6px;
+  font-size: 0.9rem;
+}
+
+.matcherExample {
+  margin-top: 11px;
+  border: 1px dashed rgba(31, 58, 95, 0.22);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.66);
+  padding: 10px;
+}
+
+.workflowTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.workflowTab {
+  border: 1px solid var(--stroke);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: rgba(31, 58, 95, 0.92);
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.workflowTab span {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: rgba(31, 58, 95, 0.1);
+  color: rgba(31, 58, 95, 0.9);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.74rem;
+}
+
+.workflowTabIcon,
+.workflowPanelIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(31, 58, 95, 0.96);
+}
+
+.workflowTabIcon {
+  width: 22px;
+  height: 22px;
+  border-radius: 8px;
+  border: 1px solid rgba(31, 58, 95, 0.3);
+  background: rgba(31, 58, 95, 0.12);
+}
+
+.workflowTabIcon svg,
+.workflowPanelIcon svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.workflowTabActive {
+  background: linear-gradient(135deg, var(--teal), var(--navy));
+  border-color: transparent;
+  color: #fff;
+}
+
+.workflowTabActive span {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+.workflowTabActive .workflowTabIcon {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+.workflowProgressTrack {
+  margin-top: 10px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(31, 58, 95, 0.12);
+  overflow: hidden;
+}
+
+.workflowProgressFill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--teal), var(--navy));
+  transition: width 0.22s ease;
+}
+
+.workflowPanel {
+  margin-top: 11px;
+  border: 1px solid var(--stroke);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.76);
+  padding: 14px;
+}
+
+.workflowPanelHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.workflowPanelIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  border: 1px solid rgba(31, 58, 95, 0.28);
+  background: rgba(31, 58, 95, 0.14);
+  flex: 0 0 auto;
+}
+
+.workflowPanelIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.workflowPanelHead h3 {
+  margin: 2px 0 0;
+}
+
+.packageGrid,
+.sampleGrid,
+.resourceGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.packageCard,
+.sampleCard,
+.resourceCard {
+  padding: 14px;
+}
+
+.packageTop,
+.sampleTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  color: rgba(42, 46, 53, 0.72);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.packageCard ul li,
+.workflowPanel ul li,
+.sampleCanvas ul li,
+.pathColumns ul li,
+.selectorPanel ul li {
+  margin-left: 2px;
+}
+
+.packageFeatured {
+  border-color: rgba(31, 58, 95, 0.24);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(235, 247, 243, 0.85));
+}
+
+.packageActions,
+.sampleActions {
+  margin-top: 11px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.integrityNote {
+  margin: 12px 0 0;
+  border: 1px dashed rgba(31, 58, 95, 0.22);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.68);
+  color: rgba(42, 46, 53, 0.82);
+  padding: 11px 13px;
+  line-height: 1.5;
+}
+
+.leadCard {
+  margin-top: 13px;
+  padding: 15px;
+}
+
+.leadHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.leadForm {
+  margin-top: 11px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.field,
+.fieldWide {
+  display: grid;
+  gap: 6px;
+}
+
+.field span,
+.fieldWide span {
+  color: rgba(31, 58, 95, 0.9);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.field input,
+.field select,
+.fieldWide input,
+.fieldWide textarea {
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.86);
+  color: rgba(42, 46, 53, 0.9);
+  padding: 10px 11px;
+  font-size: 0.92rem;
+}
+
+.fieldWide {
+  grid-column: 1 / -1;
+}
+
+.fieldWide textarea {
+  resize: vertical;
+  min-height: 110px;
+  font-family: inherit;
+}
+
+.leadError {
+  margin: 0;
+  color: var(--brand-lapis);
+  font-size: 0.84rem;
+  font-weight: 700;
+  grid-column: 1 / -1;
+}
+
+.resourceCard h3,
+.resourceCard p,
+.resourceCard .btn {
+  margin-top: 8px;
+}
+
+.faqList {
+  display: grid;
+  gap: 10px;
+}
+
+.faqItem {
+  padding: 0;
+  overflow: hidden;
+}
+
+.faqItem summary {
+  cursor: pointer;
+  list-style: none;
+  margin: 0;
+  padding: 13px 14px;
+  color: rgba(31, 58, 95, 0.95);
+  font-weight: 800;
+}
+
+.faqItem summary::-webkit-details-marker {
+  display: none;
+}
+
+.faqItem p {
+  padding: 0 14px 13px;
+}
+
+.finalCta {
+  text-align: left;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.modalBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 12, 23, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.modalDialog {
+  position: relative;
+  width: min(820px, 100%);
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.modalHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sampleViewer {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 9px;
+  align-items: stretch;
+}
+
+.navBtn {
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  color: rgba(31, 58, 95, 0.95);
+  width: 40px;
+  min-height: 180px;
+  font-size: 1.18rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.sampleCanvas {
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  background: rgba(250, 252, 255, 0.92);
+  padding: 14px;
+}
+
+.modalDots {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.modalDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 58, 95, 0.38);
+  background: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+}
+
+.modalDotActive {
+  background: linear-gradient(135deg, var(--teal), var(--navy));
+  border-color: transparent;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1120px) {
+  .heroGrid,
+  .pathPanelGrid,
+  .pathColumns,
+  .matcherGrid,
+  .packageGrid,
+  .sampleGrid,
+  .resourceGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .leadForm {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .heroGrid,
+  .pathPanelGrid,
+  .pathColumns,
+  .matcherGrid,
+  .packageGrid,
+  .sampleGrid,
+  .resourceGrid,
+  .leadForm {
+    grid-template-columns: 1fr;
+  }
+
+  .selectorDivider {
+    display: none;
+  }
+
+  .sampleViewer {
+    grid-template-columns: 1fr;
+  }
+
+  .navBtn {
+    min-height: 42px;
+    width: 100%;
+  }
+
+  .modalDialog {
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 760px) {
+  .container {
+    padding: 0 14px;
+  }
+
+  .section {
+    padding: 36px 0;
+  }
+
+  .hero {
+    padding-top: 12px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+/* Unified services design system */
+.page {
+  --teal: #1F3A5F;
+  --stroke: color-mix(in srgb, var(--brand-lapis) 18%, #ffffff);
+  --stroke-strong: color-mix(in srgb, var(--brand-lapis) 28%, #ffffff);
+  --line: rgba(31, 58, 95, 0.16);
+  --line-soft: rgba(31, 58, 95, 0.12);
+  background:
+    radial-gradient(1100px 620px at 12% 1%, rgba(168, 199, 230, 0.24), transparent 58%),
+    radial-gradient(980px 580px at 88% 8%, rgba(31, 58, 95, 0.1), transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, color-mix(in srgb, var(--brand-sky) 16%, #ffffff) 100%);
+}
+
+.heroGrid {
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.heroCard,
+.heroSide,
+.pathPanel,
+.selectorWrap,
+.matcherWrap,
+.workflowWrap,
+.packageCard,
+.sampleCard,
+.resourceCard,
+.leadCard,
+.finalCta,
+.faqItem,
+.modalDialog {
+  border-color: rgba(31, 58, 95, 0.16);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.heroTitle,
+.sectionTitle,
+.pathTitle,
+.sideTitle {
+  color: var(--brand-lapis);
+}
+
+.heroSub,
+.sectionSub,
+.heroNote,
+.kpiCard span,
+.faqItem p {
+  color: color-mix(in srgb, var(--brand-ink) 74%, #ffffff);
+}
+
+.btn {
+  border-radius: 14px;
+  border: 1px solid rgba(31, 58, 95, 0.24);
+  background: #ffffff;
+  color: var(--brand-lapis);
+  font-weight: 800;
+}
+
+.btnPrimary {
+  background: var(--brand-lapis);
+  border-color: var(--brand-lapis);
+  color: #ffffff;
+  box-shadow: 0 12px 28px rgba(31, 58, 95, 0.24);
+}
+
+.btnPrimary:hover {
+  background: #162b46;
+  border-color: #162b46;
+}
+
+.btnGhost {
+  border-color: rgba(31, 58, 95, 0.24);
+  background: #ffffff;
+  color: var(--brand-lapis);
+}
+
+.btnGhost:hover {
+  border-color: rgba(31, 58, 95, 0.44);
+  color: #1F3A5F;
+}
+
+.pathTabActive,
+.selectorPillActive,
+.matchPillActive,
+.workflowTabActive,
+.modalDotActive {
+  border-color: var(--brand-lapis);
+  background: var(--brand-lapis);
+  color: #ffffff;
+}
+
+.packageFeatured {
+  border-color: rgba(31, 58, 95, 0.24);
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.workflowTabActive span,
+.workflowTabActive .workflowTabIcon {
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.faqItem summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--brand-lapis);
+  font-size: 0.98rem;
+}
+
+.faqItem summary::after {
+  content: "+";
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  border: 1px solid rgba(31, 58, 95, 0.28);
+  background: rgba(31, 58, 95, 0.08);
+  color: var(--brand-lapis);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 900;
+  transition: transform 0.2s ease;
+}
+
+.faqItem[open] summary::after {
+  transform: rotate(45deg);
+}
+
+@media (max-width: 1120px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+  }
+}
+

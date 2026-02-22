@@ -1,0 +1,14 @@
+.homePage {
+  background: transparent;
+  color: var(--foreground);
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+}
+
+.homeSection {
+  position: relative;
+}
+
+.homeSection + .homeSection {
+  margin-top: var(--section-gap);
+}

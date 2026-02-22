@@ -23,9 +23,7 @@ export function Hero() {
                 <Link href="/blog">Read the blog</Link>
               </Button>
               <Button asChild variant="secondary">
-                <Link href="https://directus.io" target="_blank" rel="noreferrer">
-                  Explore Directus
-                </Link>
+                <Link href="/about">About</Link>
               </Button>
             </div>
           </div>

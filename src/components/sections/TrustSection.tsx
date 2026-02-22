@@ -1,150 +1,94 @@
-"use client";
-
 import { AnimatedNumber } from "@/components/core/animated-number";
+import styles from "./TrustSection.module.css";
+
+const METRICS = [
+  {
+    value: 4051,
+    suffix: "+",
+    label: "Researchers supported",
+    note: "Across engineering, medicine, management, and social sciences.",
+  },
+  {
+    value: 200,
+    suffix: "+",
+    label: "Journal acceptances",
+    note: "Support across SCI and Scopus indexed journals.",
+  },
+  {
+    value: 15,
+    suffix: "+",
+    label: "Years of editorial experience",
+    note: "Combined expert experience in publication workflows.",
+  },
+  {
+    value: 95,
+    suffix: "%",
+    label: "Client satisfaction",
+    note: "Based on feedback from completed engagements.",
+  },
+];
+
+const ASSURANCES = [
+  "COPE-aligned ethics",
+  "ICMJE-aware editorial standards",
+  "Reporting guideline alignment",
+  "No ghostwriting",
+];
 
 export function TrustSection() {
   return (
     <section
       id="sec-trustband"
-      className="py-8 md:py-12"
+      className="section-pad"
       style={{
         background:
-          "radial-gradient(1200px 600px at 30% -10%, rgba(11, 74, 162, .08), transparent 60%), radial-gradient(900px 500px at 90% 0%, rgba(15, 118, 110, .06), transparent 55%), #f6f8fc",
-        fontFamily:
-          '"Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-        WebkitFontSmoothing: "antialiased",
+          "radial-gradient(1100px 520px at 20% -10%, rgba(168,199,230,.20), transparent 60%), radial-gradient(900px 520px at 90% -10%, rgba(63,127,114,.16), transparent 55%), linear-gradient(180deg, rgba(255,255,255,.98), rgba(233,227,213,.45))",
       }}
     >
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
-        <div
-          className="relative max-sm:rounded-[24px] overflow-hidden rounded-[32px] shadow-[0_24px_80px_rgba(15,23,42,0.15)]"
-          style={{
-            background:
-              "radial-gradient(circle at top left, #0b3b6f 0, #021f42 40%, #011b3a 100%)",
-            padding: "20px 24px 24px",
-          }}
-        >
-          <div
-            className="pointer-events-none absolute opacity-75"
-            style={{
-              inset: "-40%",
-              background:
-                "radial-gradient(circle at 10% 0%, rgba(56, 189, 248, 0.22), transparent 55%), radial-gradient(circle at 90% 100%, rgba(129, 140, 248, 0.18), transparent 55%)",
-            }}
-          />
-          <div className="relative z-10 flex flex-col gap-[18px]">
-            <p className="m-0 text-base font-semibold uppercase tracking-[0.04em] text-[#cbd5f5] sm:text-lg">
-              Trusted worldwide for{" "}
-              <span className="font-bold text-white">ethical publication support.</span>
-            </p>
-            <div className="flex flex-col items-stretch gap-5 md:flex-row md:gap-8">
-              <div className="flex max-md:justify-start flex-[3] flex-wrap justify-between gap-4">
-                <article className="flex min-w-[120px] flex-1 flex-col gap-1">
-                  <p className="m-0 text-xs uppercase tracking-[0.08em] text-[rgba(191,219,254,0.9)]">
-                    Researchers supported
-                  </p>
-                  <p className="m-0 text-[26px] font-bold leading-[1.1] text-white sm:text-[32px]">
-                    <AnimatedNumber
-                      value={4051}
-                      className="inline-block"
-                      springOptions={{ bounce: 0, duration: 2000 }}
-                    />
-                    <span className="text-xl opacity-90 sm:text-2xl">+</span>
-                  </p>
-                  <p className="m-0 text-[13px] text-[rgba(226,232,240,0.9)]">
-                    Researchers across disciplines.
-                  </p>
-                </article>
-                <article className="flex min-w-[120px] flex-1 flex-col gap-1">
-                  <p className="m-0 text-xs uppercase tracking-[0.08em] text-[rgba(191,219,254,0.9)]">
-                    Journal acceptances
-                  </p>
-                  <p className="m-0 text-[26px] font-bold leading-[1.1] text-white sm:text-[32px]">
-                    <AnimatedNumber
-                      value={200}
-                      className="inline-block"
-                      springOptions={{ bounce: 0, duration: 2000 }}
-                    />
-                    <span className="text-xl opacity-90 sm:text-2xl">+</span>
-                  </p>
-                  <p className="m-0 text-[13px] text-[rgba(226,232,240,0.9)]">
-                    Papers accepted in SCI/Scopus journals.
-                  </p>
-                </article>
-                <article className="flex min-w-[120px] flex-1 flex-col gap-1">
-                  <p className="m-0 text-xs uppercase tracking-[0.08em] text-[rgba(191,219,254,0.9)]">
-                    Team experience
-                  </p>
-                  <p className="m-0 text-[26px] font-bold leading-[1.1] text-white sm:text-[32px]">
-                    <AnimatedNumber
-                      value={15}
-                      className="inline-block"
-                      springOptions={{ bounce: 0, duration: 2000 }}
-                    />
-                    <span className="text-xl opacity-90 sm:text-2xl">+</span>
-                  </p>
-                  <p className="m-0 text-[13px] text-[rgba(226,232,240,0.9)]">
-                    Years of combined editorial experience.
-                  </p>
-                </article>
-                <article className="flex min-w-[120px] flex-1 flex-col gap-1">
-                  <p className="m-0 text-xs uppercase tracking-[0.08em] text-[rgba(191,219,254,0.9)]">
-                    Satisfaction score
-                  </p>
-                  <p className="m-0 text-[26px] font-bold leading-[1.1] text-white sm:text-[32px]">
-                    <AnimatedNumber
-                      value={95}
-                      className="inline-block"
-                      springOptions={{ bounce: 0, duration: 2000 }}
-                    />
-                    <span className="text-xl opacity-90 sm:text-2xl">%</span>
-                  </p>
-                  <p className="m-0 text-[13px] text-[rgba(226,232,240,0.9)]">
-                    Client rating based on feedback.
-                  </p>
-                </article>
-              </div>
-              <div className="grid max-sm:grid-cols-1 flex-[2] grid-cols-1 gap-2.5 sm:grid-cols-2">
-                {[
-                  {
-                    emoji: "🛡",
-                    title: "COPE aligned",
-                    desc: "Ethical editing support.",
-                  },
-                  {
-                    emoji: "📑",
-                    title: "ICMJE aware",
-                    desc: "Author guidelines respected.",
-                  },
-                  {
-                    emoji: "📊",
-                    title: "Reporting ready",
-                    desc: "CONSORT · PRISMA · STROBE.",
-                  },
-                  {
-                    emoji: "✒️",
-                    title: "No ghostwriting",
-                    desc: "Author-owned manuscripts.",
-                  },
-                ].map((item) => (
-                  <article
-                    key={item.title}
-                    className="group relative flex flex-col gap-[3px] overflow-hidden rounded-[14px] border border-[rgba(148,163,184,0.45)] bg-[rgba(15,23,42,0.72)] text-xs text-[rgba(226,232,240,0.96)] transition-all hover:-translate-y-0.5 hover:border-[rgba(96,165,250,0.95)] hover:shadow-[0_14px_32px_rgba(15,23,42,0.75)]"
-                    style={{ padding: "9px 11px" }}
-                  >
-                    <div className="flex items-center gap-1.5 font-semibold relative z-10">
-                      <div className="flex h-[18px] w-[18px] flex-shrink-0 grid place-items-center rounded-full bg-[rgba(15,23,42,0.9)] text-[11px]">
-                        {item.emoji}
-                      </div>
-                      <span>{item.title}</span>
-                    </div>
-                    <p className="relative z-10 m-0 text-[11px] text-[rgba(203,213,225,0.96)]">
-                      {item.desc}
-                    </p>
-                  </article>
-                ))}
-              </div>
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="rounded-2xl border border-[#A8C7E6]/45 bg-[#1F3A5F] p-5 text-white shadow-xl sm:p-6">
+          <p className="mb-2 text-xs uppercase tracking-[0.2em] text-[#A8C7E6]">
+            TRUSTED WORLDWIDE FOR ETHICAL PUBLICATION SUPPORT.
+          </p>
+          <h2 className="m-0 text-3xl font-bold tracking-[-0.02em] text-white md:text-[34px]">
+            Trusted partner from first draft to final submission.
+          </h2>
+          <div className={`mt-3 rounded-full border border-white/20 bg-white/10 ${styles.offerMarqueeWrap}`}>
+            <div className={`${styles.offerMarquee} px-6 py-2 text-sm font-semibold text-white/90`}>
+              Expert academic editing for publication success &mdash; enjoy up to 50% OFF for a limited time
+              &#128218;&#10024; Book Now!
             </div>
+          </div>
+
+          <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            {METRICS.map((item) => (
+              <article
+                key={item.label}
+                className="rounded-2xl border border-white/20 bg-white/10 p-3"
+              >
+                <p className="m-0 text-2xl font-bold leading-none">
+                  <AnimatedNumber
+                    value={item.value}
+                    className="inline-block"
+                    springOptions={{ bounce: 0, duration: 1800 }}
+                  />
+                  <span className="text-xl">{item.suffix}</span>
+                </p>
+                <p className="mt-1 text-sm font-semibold text-white">{item.label}</p>
+                <p className="mt-1 text-xs leading-relaxed text-[#A8C7E6]">{item.note}</p>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+            {ASSURANCES.map((item) => (
+              <div
+                key={item}
+                className="rounded-xl border border-white/25 bg-white/10 px-3 py-2 text-xs text-white"
+              >
+                {item}
+              </div>
+            ))}
           </div>
         </div>
       </div>

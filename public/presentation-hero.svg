@@ -1,0 +1,61 @@
+<svg width="560" height="420" viewBox="0 0 560 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="560" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#182447"/>
+      <stop offset="1" stop-color="#0A1125"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#2E4372"/>
+      <stop offset="1" stop-color="#1A274A"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#46D5FF"/>
+      <stop offset="1" stop-color="#8B5CFF"/>
+    </linearGradient>
+    <filter id="shadow" x="-40" y="-40" width="640" height="500" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="420" rx="24" fill="url(#bg)"/>
+  <circle cx="488" cy="72" r="90" fill="#46D5FF" fill-opacity="0.1"/>
+  <circle cx="70" cy="350" r="120" fill="#8B5CFF" fill-opacity="0.12"/>
+
+  <g filter="url(#shadow)">
+    <rect x="44" y="52" width="308" height="226" rx="18" fill="#0F1730" stroke="#5B74A8" stroke-opacity="0.45"/>
+    <rect x="64" y="78" width="270" height="26" rx="8" fill="#1D2B52"/>
+    <rect x="64" y="116" width="148" height="10" rx="5" fill="#35538F"/>
+    <rect x="64" y="132" width="230" height="8" rx="4" fill="#2A3D6C"/>
+    <rect x="64" y="152" width="86" height="56" rx="10" fill="#223661"/>
+    <rect x="160" y="152" width="86" height="56" rx="10" fill="#223661"/>
+    <rect x="256" y="152" width="78" height="56" rx="10" fill="#223661"/>
+    <path d="M76 187L96 170L119 178L140 162" stroke="#53D7A3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M172 190L192 173L205 182L230 165" stroke="#46D5FF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="64" y="224" width="270" height="8" rx="4" fill="#2A3D6C"/>
+    <rect x="64" y="238" width="220" height="8" rx="4" fill="#2A3D6C"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="294" y="148" width="222" height="210" rx="18" fill="#0E172F" stroke="#6A86C2" stroke-opacity="0.5"/>
+    <rect x="316" y="172" width="120" height="14" rx="7" fill="#2D467B"/>
+    <rect x="316" y="194" width="178" height="8" rx="4" fill="#2A3D6C"/>
+    <rect x="316" y="214" width="178" height="8" rx="4" fill="#2A3D6C"/>
+    <rect x="316" y="240" width="178" height="52" rx="11" fill="#1B2A4D"/>
+    <rect x="330" y="252" width="120" height="8" rx="4" fill="#36558F"/>
+    <rect x="330" y="266" width="78" height="8" rx="4" fill="#36558F"/>
+    <rect x="316" y="306" width="84" height="30" rx="15" fill="url(#accent)" fill-opacity="0.9"/>
+    <rect x="408" y="306" width="86" height="30" rx="15" fill="#1F335E" stroke="#5C7EC0" stroke-opacity="0.6"/>
+  </g>
+
+  <rect x="44" y="300" width="226" height="56" rx="14" fill="#0E1831" stroke="#5B74A8" stroke-opacity="0.42"/>
+  <circle cx="72" cy="328" r="10" fill="#53D7A3" fill-opacity="0.9"/>
+  <rect x="90" y="320" width="148" height="8" rx="4" fill="#35538F"/>
+  <rect x="90" y="334" width="118" height="8" rx="4" fill="#2A3D6C"/>
+
+  <text x="64" y="96" fill="#DFF2FF" font-family="Arial, sans-serif" font-size="13" font-weight="700">
+    Academic Presentation Draft
+  </text>
+  <text x="316" y="182" fill="#DFF2FF" font-family="Arial, sans-serif" font-size="12" font-weight="700">
+    Poster Layout
+  </text>
+</svg>
