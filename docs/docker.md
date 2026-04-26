@@ -1,121 +1,98 @@
-# Docker setup (Re4u server)
+# Docker setup (Re4u – PostgreSQL for blog)
 
-The server stack runs **PostgreSQL**, **Directus**, and **Caddy** (reverse proxy) in Docker with pinned images, named volumes, and env-based configuration.
+Same pattern as the reference blog: **one Postgres service**, single database `blog` with user `blog`. No init scripts.
 
 ## Prerequisites
 
 - Docker and Docker Compose (v2+)
-- `.env` with required variables (see below)
+- `.env` with `DB_PASSWORD` (must match the password in `DATABASE_URL`)
 
 ## Quick start
 
-1. **Copy env and set required values:**
+1. **Copy env:**
 
    ```bash
    cp .env.example .env
    ```
 
-   Edit `.env` and set at least:
+   Defaults: `DB_USER=blog`, `DB_NAME=blog`, `DB_PASSWORD=blog`. Set `DATABASE_URL=postgresql://blog:blog@localhost:5432/blog` (same credentials).
 
-   - `DB_PASSWORD` – PostgreSQL password (e.g. strong random string)
-   - `DIRECTUS_ADMIN_EMAIL` – admin login email
-   - `DIRECTUS_ADMIN_PASSWORD` – admin login password
-   - `DIRECTUS_URL` – public URL for Directus: **`http://localhost/directus`** when using the proxy (default), or `http://localhost:8055` if you skip the proxy
-   - `DIRECTUS_SECRET` – random secret for Directus (e.g. `openssl rand -hex 32`)
-
-2. **Start the stack:**
+2. **Start full local stack (DB + web + Mailpit):**
 
    ```bash
    docker compose up -d
    ```
 
-3. **Check status:**
+3. **Create schema and seed blog:**
 
    ```bash
-   docker compose ps
+   npx prisma db push
+   npm run seed:blog
    ```
 
-4. **Access via reverse proxy (default):**
+4. **Run the app:**
 
-   - **Next.js app**: **http://localhost** (run `npm run dev` on the host; proxy forwards to port 3000)
-   - **Directus**: **http://localhost/directus/**
-   - Direct access to Directus: **http://localhost:8055** (optional, if `DIRECTUS_PORT` is set)
+   ```bash
+   npm install
+   npm run dev
+   ```
 
-## What this setup does
+   Open **http://localhost:3000** and **http://localhost:3000/blog**.
 
-| Area | Approach |
-|------|----------|
-| **Images** | Pinned versions: `postgres:16-alpine`, `directus/directus:11` (no `latest`) |
-| **Secrets** | All from `.env`; no hardcoded passwords or keys |
-| **Persistence** | Named volumes for DB and uploads; extensions stay as bind mount for local dev |
-| **Startup** | Directus waits for DB healthcheck; optional Directus healthcheck for orchestration |
-| **Restart** | `restart: unless-stopped` so containers come back after reboot |
-| **Network** | Single bridge network `re4u_network` for service isolation |
-| **Reverse proxy** | Caddy on port 80: `/` → Next.js (host:3000), `/directus/*` → Directus |
+## Book Now email via Docker (recommended for local)
 
-## Reverse proxy (Caddy)
+Use Mailpit as a local SMTP sink so Book Now modal emails are captured safely in Docker.
 
-Caddy fronts the stack on port **80** (and **443**):
+1. Mailpit starts automatically with `docker compose up -d`.
+   If app runs in Docker, `docker-compose.yml` defaults SMTP host to `mailpit` for the `web` service.
 
-- **`/`** → Next.js app at `host.docker.internal:3000` (run `npm run dev` on your machine).
-- **`/directus`**, **`/directus/*`** → Directus (path prefix stripped).
+2. Add these vars in `.env`:
 
-Set **`DIRECTUS_URL=http://localhost/directus`** (or `http://PROXY_HOST/directus`) in `.env` so Directus and the Next.js app use the correct base URL. Optional env vars:
+   ```bash
+   BOOKNOW_SMTP_HOST=localhost
+   BOOKNOW_SMTP_PORT=1025
+   BOOKNOW_SMTP_SECURE=false
+   BOOKNOW_SMTP_FROM=no-reply@local.re4u
+   BOOKNOW_SMTP_TO=ops@local.re4u
+   ```
 
-- `PROXY_HOST` (default: `localhost`) – hostname Caddy listens for
-- `PROXY_HTTP_PORT` (default: `80`), `PROXY_HTTPS_PORT` (default: `443`) – proxy ports
+   Optional auth vars (usually not needed for Mailpit):
+   - `BOOKNOW_SMTP_USER`
+   - `BOOKNOW_SMTP_PASS`
 
-On Linux, `host.docker.internal` is added via `extra_hosts: host-gateway` so Caddy can reach the host.
+3. Open Mailpit inbox UI:
+   - [http://localhost:8025](http://localhost:8025)
 
-## Optional env vars (with defaults)
+Notes:
+- The app posts modal data to `/api/book-now` by default.
+- If `NEXT_PUBLIC_API_URL` is set, modal submissions go to `${NEXT_PUBLIC_API_URL}/contact` instead.
 
-In `.env` you can override:
+## Env vars
 
-- `DB_USER` (default: `directus`)
-- `DB_NAME` (default: `directus`)
-- `DB_PORT` (default: `5432`)
-- `DIRECTUS_PORT` (default: `8055`)
-- `PROXY_HOST` (default: `localhost`), `PROXY_HTTP_PORT` (default: `80`), `PROXY_HTTPS_PORT` (default: `443`)
+| Var | Default | Description |
+|-----|---------|-------------|
+| `DB_USER` | `blog` | Postgres user |
+| `DB_PASSWORD` | (required) | Postgres password – set in `.env` |
+| `DB_NAME` | `blog` | Postgres database name |
+| `DB_PORT` | `5432` | Port on host |
+| `DATABASE_URL` | — | Prisma connection string; use same user/password/db as above |
 
 ## Volumes
 
-- **`re4u_directus_db_data`** – PostgreSQL data (survives `docker compose down`)
-- **`re4u_directus_uploads`** – Directus file uploads
-- **`./directus/extensions`** – Bind mount so you can edit extensions without rebuilding
+- **`re4u_db_data`** – Postgres data (survives `docker compose down`)
 
-To list volumes:
+## Commands
 
 ```bash
-docker volume ls | grep re4u
-```
-
-To remove everything (including data):
-
-```bash
-docker compose down -v
-```
-
-## Useful commands
-
-```bash
-# Logs
-docker compose logs -f proxy
-docker compose logs -f directus
 docker compose logs -f db
-
-# Restart one service
-docker compose restart directus
-
-# Stop
+docker compose restart db
 docker compose down
-
-# Rebuild after changing compose/env
-docker compose up -d
+docker compose down -v   # remove data
 ```
 
 ## Troubleshooting
 
-- **“Set DB_PASSWORD in .env”** – Ensure `.env` exists and contains `DB_PASSWORD=...` and `DIRECTUS_SECRET=...`.
-- **Directus won’t start** – Check `docker compose logs directus`; often DB not ready yet (healthcheck will retry).
-- **Port in use** – Change `DB_PORT`, `DIRECTUS_PORT`, or `PROXY_HTTP_PORT` in `.env` and run `docker compose up -d` again.
-- **502 / connection refused to Next.js** – Ensure `npm run dev` is running on the host (port 3000). Caddy proxies `/` to `host.docker.internal:3000`.
+- **"Set DB_PASSWORD in .env"** – Add `DB_PASSWORD=blog` (or your password) to `.env`.
+- **Blog: "relation Post does not exist"** – Run `npx prisma db push` then `npm run seed:blog`.
+- **Blog: connection refused** – Start Postgres with `docker compose up -d` and ensure `DATABASE_URL` uses `localhost:5432` (or your `DB_PORT`).
+- **Blog shows "No posts yet"** – Run `npm run seed:blog` after `npx prisma db push`.

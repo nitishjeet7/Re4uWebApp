@@ -1,0 +1,212 @@
+.aboutPage {
+  --about-ink: var(--brand-ink);
+  --about-lapis: var(--brand-lapis);
+  --about-green: var(--brand-green);
+  --about-sky: var(--brand-sky);
+  --about-line: var(--line);
+  --about-muted: var(--muted-foreground);
+  --about-card-top: color-mix(in srgb, var(--card) 90%, var(--surface-sky));
+  --about-card-bottom: color-mix(in srgb, var(--card) 84%, var(--surface-sky));
+  --about-shadow: 0 14px 32px color-mix(in srgb, var(--about-lapis) 14%, transparent);
+  --about-card-shell-top: color-mix(in srgb, #ffffff 90%, var(--about-sky));
+  --about-card-shell-bottom: color-mix(in srgb, #ffffff 82%, var(--about-sky));
+  --about-card-border: color-mix(in srgb, var(--about-lapis) 14%, #ffffff);
+  --about-warm-fill: color-mix(in srgb, #ffffff 76%, var(--about-sky));
+  --about-warm-fill-strong: color-mix(in srgb, #ffffff 66%, var(--about-sky));
+  --about-warm-stroke: color-mix(in srgb, var(--about-lapis) 12%, #ffffff);
+
+  position: relative;
+  background:
+    radial-gradient(
+      1200px 560px at 12% 0%,
+      color-mix(in srgb, var(--about-sky) 22%, transparent),
+      transparent 64%
+    ),
+    radial-gradient(
+      900px 500px at 88% 2%,
+      color-mix(in srgb, var(--about-lapis) 8%, transparent),
+      transparent 64%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, #ffffff 92%, var(--about-sky)),
+      color-mix(in srgb, #ffffff 88%, var(--about-sky))
+    );
+  padding-bottom: clamp(2rem, 3.4vw, 3.2rem);
+}
+
+.aboutPage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      1200px 520px at 12% 2%,
+      color-mix(in srgb, var(--about-sky) 18%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      950px 500px at 92% 8%,
+      color-mix(in srgb, var(--about-lapis) 12%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      840px 440px at 48% 100%,
+      color-mix(in srgb, var(--about-green) 6%, transparent),
+      transparent 70%
+    );
+  pointer-events: none;
+}
+
+.heroBlock {
+  position: relative;
+  margin-bottom: clamp(1rem, 2vw, 1.6rem);
+}
+
+.stack {
+  position: relative;
+  display: grid;
+  gap: clamp(0.9rem, 1.6vw, 1.2rem);
+}
+
+.sectionShell {
+  position: relative;
+  border-radius: 24px;
+  border: 1px solid var(--about-line);
+  background: linear-gradient(180deg, var(--about-card-top), var(--about-card-bottom));
+  box-shadow: var(--about-shadow);
+  overflow: hidden;
+}
+
+.sectionShell::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--about-lapis) 45%, transparent),
+    color-mix(in srgb, var(--about-sky) 58%, transparent),
+    color-mix(in srgb, var(--about-green) 36%, transparent)
+  );
+  pointer-events: none;
+}
+
+.sectionShell :global(section) {
+  margin: 0 !important;
+  padding-block: clamp(1.45rem, 2.9vw, 2.4rem);
+  padding-inline: clamp(0.9rem, 1.6vw, 1.4rem);
+}
+
+.aboutPage :global(section h1) {
+  font-family: var(--font-manrope), "Avenir Next", "Segoe UI", sans-serif !important;
+  font-size: clamp(1.95rem, 3.7vw, 3rem) !important;
+  line-height: 1.12 !important;
+  letter-spacing: -0.018em;
+  font-weight: 800 !important;
+}
+
+.aboutPage :global(section h2) {
+  font-family: var(--font-manrope), "Avenir Next", "Segoe UI", sans-serif !important;
+  font-size: clamp(1.35rem, 2.35vw, 2rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.012em;
+  font-weight: 780 !important;
+}
+
+.aboutPage :global(section h3) {
+  font-family: var(--font-manrope), "Avenir Next", "Segoe UI", sans-serif !important;
+  font-size: clamp(1rem, 1.55vw, 1.3rem) !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.006em;
+  font-weight: 730 !important;
+}
+
+.aboutPage :global(section p) {
+  font-family: var(--font-inter), "Avenir Next", "Segoe UI", sans-serif;
+  font-size: clamp(0.95rem, 1.02vw, 1.02rem);
+  line-height: 1.62;
+  color: color-mix(in srgb, var(--about-muted) 92%, var(--about-ink));
+}
+
+.aboutPage :global([class*="_sub__"]) {
+  max-width: 100% !important;
+}
+
+.aboutPage :global([fill*="233, 227, 213"]),
+.aboutPage :global([fill*="233,227,213"]),
+.aboutPage :global([fill="#e9e3d5"]),
+.aboutPage :global([fill="#E9E3D5"]) {
+  fill: var(--about-warm-fill) !important;
+}
+
+.aboutPage :global([stroke*="233, 227, 213"]),
+.aboutPage :global([stroke*="233,227,213"]) {
+  stroke: var(--about-warm-stroke) !important;
+}
+
+.aboutPage :global(stop[stop-color="#E9E3D5"]),
+.aboutPage :global(stop[stop-color="#e9e3d5"]) {
+  stop-color: var(--about-warm-fill-strong) !important;
+}
+
+.aboutPage :global([class*="card"]),
+.aboutPage :global([class*="Card"]),
+.aboutPage :global([class*="panel"]),
+.aboutPage :global([class*="Panel"]),
+.aboutPage :global([class*="box"]),
+.aboutPage :global([class*="Box"]),
+.aboutPage :global([class*="tile"]),
+.aboutPage :global([class*="Tile"]),
+.aboutPage :global([class*="frame"]),
+.aboutPage :global([class*="Frame"]),
+.aboutPage :global([class*="glass"]),
+.aboutPage :global([class*="Glass"]) {
+  background-color: var(--about-card-shell-bottom) !important;
+  background-image: linear-gradient(
+    180deg,
+    var(--about-card-shell-top),
+    var(--about-card-shell-bottom)
+  ) !important;
+  border-color: var(--about-card-border) !important;
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--about-lapis) 10%, transparent) !important;
+}
+
+@media (max-width: 860px) {
+  .sectionShell {
+    border-radius: 22px;
+  }
+
+  .sectionShell :global(section) {
+    padding-block: clamp(1.25rem, 2.4vw, 1.8rem);
+    padding-inline: clamp(0.8rem, 1.2vw, 1rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .heroBlock {
+    margin-bottom: 0.9rem;
+  }
+
+  .stack {
+    gap: 0.75rem;
+  }
+
+  .sectionShell {
+    border-radius: 18px;
+  }
+
+  .aboutPage :global(section h1) {
+    font-size: clamp(1.7rem, 8vw, 2.15rem) !important;
+  }
+
+  .aboutPage :global(section h2) {
+    font-size: clamp(1.2rem, 6vw, 1.55rem) !important;
+  }
+
+  .sectionShell :global(section) {
+    padding-block: 1.05rem;
+    padding-inline: 0.72rem;
+  }
+}

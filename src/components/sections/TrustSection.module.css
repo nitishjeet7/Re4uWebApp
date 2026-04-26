@@ -1,0 +1,18 @@
+.offerMarqueeWrap {
+  overflow: hidden;
+}
+
+.offerMarquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: offerMarquee 18s linear infinite;
+}
+
+@keyframes offerMarquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

@@ -1,11 +1,11 @@
-# Lumen Press (Next.js + Directus + shadcn/ui)
+# Lumen Press (Next.js + Prisma + shadcn/ui)
 
-Modern editorial site with a blog powered by Directus and a Tiptap editor. The public site reads published content from Directus via REST/SDK.
+Modern editorial site with a blog powered by Prisma and PostgreSQL. No Directus.
 
 ## Requirements
 
 - Node.js 20.9+ (Next.js 16 requirement)
-- Docker (for local Directus + Postgres)
+- Docker (optional, for local Postgres)
 
 ## Quickstart
 
@@ -15,136 +15,103 @@ Modern editorial site with a blog powered by Directus and a Tiptap editor. The p
 cp .env.example .env
 ```
 
-2. Set required Docker env vars in `.env` (see [docs/docker.md](docs/docker.md)):
-   - `DB_PASSWORD`, `DIRECTUS_ADMIN_EMAIL`, `DIRECTUS_ADMIN_PASSWORD`, `DIRECTUS_URL`, `DIRECTUS_SECRET` (e.g. `openssl rand -hex 32`).
+2. Set in `.env` (see [docs/docker.md](docs/docker.md)): `DB_PASSWORD` and `DATABASE_URL` with the same credentials (e.g. `blog`/`blog`/`blog`).
 
-3. Start the server stack:
+3. Start Postgres (if using Docker):
 
 ```bash
 docker compose up -d
 ```
 
-4. Run the Next.js app:
+4. Create blog schema and seed:
 
 ```bash
 npm install
+npx prisma db push
+npm run seed:blog
+```
+
+5. Run the Next.js app:
+
+```bash
 npm run dev
 ```
 
-**With reverse proxy (default):** open **http://localhost** for the app and **http://localhost/directus/** for Directus.  
-**Without proxy:** open **http://localhost:3000** for the app and **http://localhost:8055** for Directus.
+Open **http://localhost:3000** and **http://localhost:3000/blog**.
 
-## Directus Setup
+## Book Now SMTP (Modal Email)
 
-After Directus starts, visit **http://localhost/directus/** (via proxy) or **http://localhost:8055** (direct) and log in with the admin credentials from `.env`.
+The `BookNowModal` now posts to `/api/book-now` by default and sends email using SMTP.
 
-Create the following collections:
-
-### `authors`
-- `name` (string)
-- `avatar` (file)
-- `bio` (text)
-
-### `tags`
-- `name` (string)
-- `slug` (string)
-
-### `posts`
-- `title` (string)
-- `slug` (string)
-- `excerpt` (text)
-- `cover_image` (file)
-- `author` (many-to-one → `authors`)
-- `tags` (many-to-many → `tags`)
-- `published_at` (datetime)
-- `status` (string: `draft` / `published`)
-- `content` (Rich Text interface with Tiptap)
-- `updated_at` (datetime)
-
-Create a **Public** role with read-only access to `posts`, `authors`, and `tags` and generate a static token. Put that value in `DIRECTUS_PUBLIC_TOKEN`.
-
-### Directus admin theme (ResearchEdit4U)
-
-The Data Studio can use the ResearchEdit4U design system theme (logo navy `#0b3c71`, ink `#111827`, CTA blue).
-
-**Option A – Theme extension (version-controlled)**  
-The custom theme lives in `directus/extensions/researchedit4u-light/`. After changing the theme, rebuild and restart Directus:
+Set these variables in `.env` on the server:
 
 ```bash
-cd directus/extensions/researchedit4u-light && npm run build
-docker compose restart directus
+BOOKNOW_SMTP_HOST=smtp.your-provider.com
+BOOKNOW_SMTP_PORT=465
+BOOKNOW_SMTP_SECURE=true
+BOOKNOW_SMTP_USER=your-smtp-username
+BOOKNOW_SMTP_PASS=your-smtp-password
+BOOKNOW_SMTP_FROM=no-reply@yourdomain.com
+BOOKNOW_SMTP_TO=ops@yourdomain.com,support@yourdomain.com
+CONTACT_SMTP_TO=support@yourdomain.com
+FREE_GUIDE_SMTP_TO=support@yourdomain.com
+SUBSCRIBE_SMTP_TO=support@yourdomain.com
+RESEARCH_STYLE_QUOTE_SMTP_TO=support@yourdomain.com
+RESEARCH_PLANNING_SMTP_TO=support@yourdomain.com
+REMINDS_SMTP_TO=support@yourdomain.com
 ```
 
-Then in Directus: **Settings → Theming** (or user appearance), choose **ResearchEdit4U Light** as the theme.
+Notes:
+- `BOOKNOW_SMTP_TO` supports comma-separated recipient emails.
+- `CONTACT_SMTP_TO` is optional. If omitted, contact-style requests go to `BOOKNOW_SMTP_TO`.
+- `FREE_GUIDE_SMTP_TO` is optional. If omitted, free-guide requests go to `BOOKNOW_SMTP_TO`.
+- `SUBSCRIBE_SMTP_TO` is optional. If omitted, footer subscriptions go to `BOOKNOW_SMTP_TO`.
+- `RESEARCH_STYLE_QUOTE_SMTP_TO` is optional. If omitted, editing quote requests go to `BOOKNOW_SMTP_TO`.
+- `RESEARCH_PLANNING_SMTP_TO` is optional. If omitted, research-planning enquiries go to `BOOKNOW_SMTP_TO`.
+- `REMINDS_SMTP_TO` is optional. If omitted, ReMinds requests go to `BOOKNOW_SMTP_TO`.
+- `BOOKNOW_SMTP_PORT=465` with `BOOKNOW_SMTP_SECURE=true` is the recommended setup.
+- If `NEXT_PUBLIC_API_URL` is set, the modal continues using `${NEXT_PUBLIC_API_URL}/contact` instead of local SMTP route.
 
-**Option B – Settings only (no code)**  
-In Directus: **Settings → Project Settings → Branding**, set **Project Color** to `#0b3c71` and upload a 40×40 **Project Logo**. In **Settings → Theming**, customize the default Light theme (primary, foreground, backgrounds) to match; use **Custom CSS** with `#app` scope if needed for final overrides.
-
-## Seed Sample Content
-
-Create an admin access token in Directus (User profile → Access Tokens) and set it in `.env`:
+### Docker-first local setup (Mailpit)
 
 ```bash
-DIRECTUS_ADMIN_TOKEN=your_admin_token
+docker compose --profile mail up -d mailpit
 ```
 
-Then run:
+Local `.env` values:
 
 ```bash
-npm run seed:directus
+BOOKNOW_SMTP_HOST=localhost
+BOOKNOW_SMTP_PORT=1025
+BOOKNOW_SMTP_SECURE=false
+BOOKNOW_SMTP_FROM=no-reply@local.re4u
+BOOKNOW_SMTP_TO=ops@local.re4u
 ```
 
-### Editor role
+View captured emails at [http://localhost:8025](http://localhost:8025).
 
-The seed tries to create an **Editor** role that can only do editorial work in Directus (content + files, no Settings/Data Model). If the seed skips it (403 on roles API), create it manually:
+## Blog (Prisma)
 
-1. **Settings → User Roles** → Create role **Editor** (name/description as you like).
-2. **Settings → Access Policies** → Create a policy (e.g. **Editor content**):
-   - **App Access:** turn **ON**. (If this is off, Editor users see “No App Access” and cannot use the Data Studio.)
-   - **Admin Access:** leave **OFF**.
-   - Add permissions for: `posts`, `authors`, `tags`, `posts_tags` (create, read, update, delete) and `directus_files` (create, read, update).
-3. Assign the policy to the **Editor** role (link the policy to the role in the policy or role form).
-4. **User Management** → select the user → set **Role** to **Editor**.
+- **Schema:** `prisma/schema.prisma` – `Post` model (title, slug, content, excerpt, coverImage, published, authorName, etc.).
+- **Data layer:** `src/lib/blog.ts` – `getLatestPosts`, `getPostsPage`, `getPostBySlug`.
+- **Seed:** `npm run seed:blog` – creates 3 sample posts (idempotent).
 
-**If an Editor user sees “No App Access”:** the policy attached to the Editor role does not have **App Access** enabled. Edit that policy in **Settings → Access Policies** and enable **App Access**.
-
-### Auto-generate post slug from title
-
-The slug field **does not update in the form** as you type. To have slug filled from the title when you save:
-
-1. **Settings → Flows** → Create new flow named **"Post slug from title"**.
-2. **Trigger:** Event Hook, type **Filter** (blocking) — Collection: `posts`, Events: `item.create`, `item.update`.
-3. **Operation:** Add a **Run Script** operation with this code:
-
-```js
-const payload = $trigger?.payload ?? {};
-const title = payload.title;
-if (!title) return payload;
-const slug = String(title)
-  .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-  .toLowerCase().trim()
-  .replace(/\s+/g, '-')
-  .replace(/[^\w-]+/g, '').replace(/--+/g, '-');
-return { ...payload, slug };
-```
-
-4. Save and set the flow to **Active**. When you create or update a post, **leave the Slug field empty** and save — the flow will set the slug from the title before the item is saved.
+Content is stored as HTML in `Post.content`. Cover images use full URLs in `Post.coverImage`.
 
 ## Deployment and server updates
 
-- **First-time setup:** See [docs/server-update.md](docs/server-update.md) for clone, `.env`, Docker, and running the Next.js app (e.g. with PM2).
+- **First-time setup:** See [DEPLOY.md](DEPLOY.md) for clone, `.env`, and Docker.
 - **After pushing new code:** On the server run:
   ```bash
-  cd /path/to/Re4uWebApp
-  git pull origin main    # or your branch name
-  docker compose up -d    # only if you changed Docker/env
-  npm ci && npm run build
-  pm2 restart re4u-web    # or restart your process manager
+  cd /opt/Re4uWebApp
+  git pull
+  docker compose -f docker-compose.prod.yml up -d --build
   ```
-  Full steps and one-liner: [docs/server-update.md](docs/server-update.md).
+  See [DEPLOY.md](DEPLOY.md) for details.
 
 ## Scripts
 
 - `npm run dev` – local dev
 - `npm run build` – production build
 - `npm run start` – production server
+- `npm run seed:blog` – seed sample blog posts (idempotent)

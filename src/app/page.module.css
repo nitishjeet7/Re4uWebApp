@@ -1,0 +1,30 @@
+.homePage {
+  background: transparent;
+  color: var(--foreground);
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  --section-pad: 64px;
+  --section-gap: 18px;
+}
+
+.homeSection {
+  position: relative;
+}
+
+.homeSection + .homeSection {
+  margin-top: var(--section-gap);
+}
+
+@media (max-width: 1024px) {
+  .homePage {
+    --section-pad: 48px;
+    --section-gap: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .homePage {
+    --section-pad: 34px;
+    --section-gap: 14px;
+  }
+}

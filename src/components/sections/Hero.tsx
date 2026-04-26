@@ -1,235 +1,304 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { BookNowModal } from "@/components/sections/BookNowModal";
 
-const heroSlides = [
+type HeroSlide = {
+  label: string;
+  title: string;
+  copy: string;
+  tags: string[];
+  cta: string;
+  href: string;
+  imageSrc: string;
+  imageFallbackSrc?: string;
+  imageAlt: string;
+};
+
+const HERO_SLIDES: HeroSlide[] = [
   {
-    id: 1,
-    label: "Slide 1 of 4 · AI & similarity safety",
-    title: "Pass AI & plagiarism checks confidently.",
-    copy: "Screen your manuscript for AI-like phrasing and high similarity, then use editor feedback to revise until similarity and AI scores are within safe limits.",
-    tags: ["AI & similarity review", "Turnitin / iThenticate focus", "Editor feedback built-in"],
-    cta: "Explore AI & plagiarism support",
+    label: "AI and similarity safety",
+    title: "Pass AI and plagiarism checks confidently.",
+    copy:
+      "Screen your manuscript for AI-like phrasing and high similarity, then use editor feedback to revise until similarity and AI scores are within safe limits.",
+    tags: ["AI and similarity review", "Turnitin / iThenticate focus", "Editor feedback built-in"],
+    cta: "Explore AI and plagiarism support",
+    href: "/services/editing-support",
+    imageSrc: "/images/home-page-hero/image4.jpg",
+    imageAlt: "AI and plagiarism safety visual",
   },
   {
-    id: 2,
-    label: "Slide 2 of 4 · Abstract & section coaching",
-    title: "Clarify your abstract, introduction & flow.",
-    copy: "Get targeted feedback on abstract clarity, introduction structure, and overall manuscript flow to strengthen your narrative and improve reviewer reception.",
-    tags: ["Abstract refinement", "Introduction structure", "Narrative flow"],
-    cta: "See abstract & manuscript support",
+    label: "Abstract and section coaching",
+    title: "Clarify your abstract,\nintroduction and flow.",
+    copy:
+      "Get guided feedback on how clearly your aims, methods and key findings are presented so editors and reviewers can follow your story quickly.",
+    tags: ["Section-by-section feedback", "Logical flow and structure", "Reviewer-style comments"],
+    cta: "See abstract and\nmanuscript support",
+    href: "/services/editing-support",
+    imageSrc: "/images/home-page-hero/abstract-intro-flow.png",
+    imageFallbackSrc: "/images/home-page-hero/abstract-intro-flow.svg",
+    imageAlt: "Abstract and manuscript guidance visual",
   },
   {
-    id: 3,
-    label: "Slide 3 of 4 · Graphical abstracts & figures",
-    title: "Graphical abstracts & figures that impress editors.",
-    copy: "Create compelling visual summaries and professional figures that enhance your manuscript's impact and help reviewers quickly understand your research.",
-    tags: ["Graphical abstracts", "Figure design", "Visual impact"],
+    label: "Graphical abstracts and figures",
+    title: "Graphical abstracts and figures that impress editors.",
+    copy:
+      "Translate complex results into clean, journal-ready visuals that highlight your key message without overloading reviewers.",
+    tags: ["Journal-compliant layouts", "Infographics and visual summaries", "Conference-ready graphics"],
     cta: "View graphical abstract options",
+    href: "/services/presentations",
+    imageSrc: "/images/home-page-hero/image8.jpg",
+    imageAlt: "Graphical abstracts service visual",
   },
   {
-    id: 4,
-    label: "Slide 4 of 4 · Editing & submission support",
-    title: "End-to-end research paper editing & submission support.",
-    copy: "Complete support from initial draft refinement through journal submission, response handling, and final acceptance.",
-    tags: ["Full editing", "Submission guidance", "Response handling"],
-    cta: "Explore full editing & submission",
+    label: "Editing and submission support",
+    title: "End-to-end editing and\nsubmission support.",
+    copy:
+      "Align language, journal formatting, cover letters and submission packs so your manuscript reaches the right journal in the best possible shape.",
+    tags: ["Language and formatting checks", "Journal selection guidance", "Submission pack review"],
+    cta: "Explore editing and submission",
+    href: "/services/service-overview",
+    imageSrc: "/images/home-page-hero/image2.jpg",
+    imageAlt: "Research paper editing and submission visual",
   },
 ];
 
-export function Hero() {
-  const [activeSlide, setActiveSlide] = useState(0);
+const AUTO_ROTATE_MS = 9000;
+
+function SlideImage({
+  src,
+  fallbackSrc,
+  alt,
+  priority,
+  className,
+}: {
+  src: string;
+  fallbackSrc?: string;
+  alt: string;
+  priority: boolean;
+  className: string;
+}) {
+  const [currentSrc, setCurrentSrc] = useState(src);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const nextSlide = () => {
-    setActiveSlide((prev) => (prev + 1) % heroSlides.length);
-  };
-
-  const prevSlide = () => {
-    setActiveSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-  };
-
-  const currentSlide = heroSlides[activeSlide];
+    setCurrentSrc(src);
+  }, [src]);
 
   return (
-    <section
-      id="sec-hero"
-      className="relative overflow-hidden"
-      style={{
-        background:
-          "radial-gradient(circle at top left, #e3f0ff 0, #f4f6fb 40%, #f9fafb 100%)",
+    <Image
+      src={currentSrc}
+      alt={alt}
+      width={520}
+      height={360}
+      className={className}
+      priority={priority}
+      onError={() => {
+        if (fallbackSrc && currentSrc !== fallbackSrc) setCurrentSrc(fallbackSrc);
       }}
-    >
-      <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
-        <div className="py-8 pb-6 sm:py-11 sm:pb-9">
-          <div className="grid max-lg:grid-cols-1 grid-cols-[1.25fr_1.15fr] items-center gap-6 sm:gap-10">
-            <div className="hero__left max-lg:order-1">
-              <Badge className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(148,163,184,0.5)] bg-white px-3 py-1 text-[0.75rem] font-medium text-[#0b3c71] sm:text-[0.8rem]">
-                <span className="h-2 w-2 flex-shrink-0 rounded-full bg-[#00a2a2]" />
-                <span>From draft to journal decision – in one partner</span>
-              </Badge>
+    />
+  );
+}
 
-              <h1 className="mb-1 mt-3 text-2xl font-bold leading-[1.12] tracking-[-0.03em] text-[#101827] sm:mt-4 md:text-[2.36rem] sm:text-[2.0rem]">
-                Research paper editing &{" "}
-                <span className="text-[#00a2a2]">journal submission support</span>{" "}
-                you can trust.
-              </h1>
+export function Hero() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const intervalRef = useRef<number | null>(null);
 
-              <p className="mb-0 max-w-[34rem] text-sm text-[#6b7280] sm:text-[0.98rem]">
-                Pass AI and plagiarism checks confidently, reduce hidden rejection
-                risks, and move from rough draft to submission-ready manuscript with
-                ethical, end-to-end support.
-              </p>
+  useEffect(() => {
+    intervalRef.current = window.setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, AUTO_ROTATE_MS);
 
-              <div className="mt-4 flex flex-wrap items-center gap-2 sm:mt-6 sm:gap-3">
-                <Button
-                  asChild
-                  className="w-full rounded-full bg-gradient-to-br from-[#0b3c71] to-[#132644] px-4 py-2 text-xs font-semibold text-white shadow-[0_12px_30px_rgba(15,23,42,0.45)] transition-all hover:-translate-y-0.5 hover:shadow-lg sm:w-auto sm:px-5 sm:py-2.5 sm:text-sm"
-                >
-                  <Link href="/contact">Book 1:1 Expert Call</Link>
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full rounded-full border-slate-300 bg-white/90 px-4 py-2 text-xs font-semibold text-[#0b3c71] hover:bg-[#e4edf8] sm:w-auto sm:px-5 sm:py-2.5 sm:text-sm"
-                >
-                  See Editing Samples
-                </Button>
-              </div>
+    return () => {
+      if (intervalRef.current !== null) {
+        window.clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, []);
 
-              <div className="mt-4 flex flex-wrap gap-4 text-[0.75rem] text-[#6b7280] sm:mt-6 sm:gap-6 sm:text-[0.82rem]">
-                <div>
-                  <strong className="block text-[0.8rem] text-[#101827] sm:text-[0.88rem]">
-                    Fast turnarounds
-                  </strong>
-                  24–72 hours for most editing jobs.
-                </div>
-                <div>
-                  <strong className="block text-[0.8rem] text-[#101827] sm:text-[0.88rem]">
-                    Ethical & transparent
-                  </strong>
-                  COPE-aligned support – no ghostwriting.
-                </div>
-                <div>
-                  <strong className="block text-[0.8rem] text-[#101827] sm:text-[0.88rem]">
-                    Proven outcomes
-                  </strong>
-                  4,051+ researchers helped · 200+ acceptances.
-                </div>
-              </div>
+  function stopAutoRotate() {
+    if (intervalRef.current !== null) {
+      window.clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }
+
+  const currentSlide = HERO_SLIDES[activeIndex];
+  const slideLabel = `Slide ${activeIndex + 1} of ${HERO_SLIDES.length} - ${currentSlide.label}`;
+
+  const goPrev = () => {
+    stopAutoRotate();
+    setActiveIndex((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+  };
+
+  const goNext = () => {
+    stopAutoRotate();
+    setActiveIndex((prev) => (prev + 1) % HERO_SLIDES.length);
+  };
+
+  return (
+    <section id="sec-hero" className="section-pad">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid gap-8 lg:grid-cols-[1.25fr_1.15fr] lg:items-center">
+          <div>
+            <div className="inline-flex flex-wrap items-center gap-2 rounded-full border border-[rgba(148,163,184,.5)] bg-white/90 px-3 py-1 text-xs font-medium text-[#1F3A5F]">
+              <span className="h-2 w-2 rounded-full bg-[#3F7F72]" aria-hidden />
+              <span className="min-w-0">From draft to journal decision - in one partner</span>
             </div>
 
-            <div
-              aria-label="Key services carousel"
-              className="relative max-lg:order-2 overflow-hidden rounded-[18px] border border-[rgba(148,163,184,0.65)] p-4 shadow-[0_20px_50px_rgba(15,23,42,0.10)] sm:rounded-[20px] sm:p-6"
-              style={{
-                background:
-                  "radial-gradient(circle at top left, #ffffff 0, #e3f1ff 40%, #dbeafe 100%)",
-              }}
-            >
-              <div className="mb-3 flex items-center justify-between gap-2 text-[0.7rem] text-[#6b7280] sm:mb-4 sm:text-[0.76rem]">
-                <Badge className="min-w-0 flex-1 truncate rounded-full border border-[rgba(148,163,184,0.5)] bg-[rgba(15,23,42,0.06)] px-2 py-1 text-[0.7rem] text-[#6b7280] sm:px-3 sm:text-[0.76rem]">
-                  {currentSlide.label}
-                </Badge>
-                <div className="flex flex-shrink-0 items-center gap-1.5" aria-hidden>
-                  {heroSlides.map((_, index) => (
-                    <span
-                      key={index}
-                      className={`rounded-full transition-all ${
-                        index === activeSlide
-                          ? "h-[7px] w-4 bg-[#0b3c71]"
-                          : "h-[7px] w-[7px] bg-[rgba(148,163,184,0.8)]"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
+            <h1 className="mt-4 text-[36px] font-semibold leading-[1.2] tracking-[-0.03em] text-[#2A2E35] md:text-[42px]">
+              Research paper editing and <span className="text-[#3F7F72]">journal submission support</span> you can
+              trust.
+            </h1>
 
-              <div className="relative">
-                {heroSlides.map((slide, index) => (
-                  <article
-                    key={slide.id}
-                    className={`grid max-md:grid-cols-1 grid-cols-[1.05fr_1.15fr] items-center gap-4 sm:gap-5 ${
-                      index === activeSlide ? "grid" : "hidden"
-                    }`}
-                    data-label={slide.label}
-                    style={{
-                      animation: index === activeSlide ? "fadeIn 260ms ease-out" : "none",
-                    }}
-                  >
-                    <div>
-                      <h2 className="mb-1 text-base font-semibold text-[#0b3c71] sm:text-[1.15rem]">
-                        {slide.title}
-                      </h2>
-                      <p className="mb-2 text-[0.8rem] text-[#6b7280] sm:mb-3 sm:text-[0.84rem]">
-                        {slide.copy}
-                      </p>
-                      <div className="mb-3 flex flex-wrap gap-1 text-[0.7rem] sm:mb-4 sm:gap-1.5 sm:text-[0.72rem]">
-                        {slide.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="rounded-full bg-[rgba(15,23,42,0.05)] px-1.5 py-0.5 text-[#6b7280] sm:px-2"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <button
-                        type="button"
-                        className="mt-2 inline-flex h-auto cursor-pointer items-center gap-1 border-0 bg-transparent p-0 text-[0.75rem] text-[#0b3c71] hover:underline sm:mt-4 sm:text-[0.8rem]"
-                      >
-                        {slide.cta}
-                        <span className="text-base sm:text-lg">↳</span>
-                      </button>
-                    </div>
-                    <div
-                      aria-hidden
-                      className="relative h-[160px] w-full overflow-hidden rounded-[12px] border border-[rgba(15,23,42,0.4)] bg-[#020617] sm:h-[200px] sm:rounded-[14px]"
-                    >
-                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950">
-                        <span className="text-xs text-slate-400 sm:text-sm">
-                          Visual placeholder
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
+            <p className="mt-4 max-w-[34rem] text-[16px] leading-relaxed text-[#2A2E35]/80">
+              Pass AI and plagiarism checks confidently, reduce hidden rejection risks, and move from rough
+              draft to submission-ready manuscript with ethical, end-to-end support.
+            </p>
 
-              <div className="pointer-events-none absolute bottom-3 left-3 right-3 flex flex-col items-end justify-between gap-2 sm:bottom-4 sm:left-auto sm:right-5 sm:flex-row sm:items-center sm:gap-0">
-                <div className="order-2 flex gap-2 pointer-events-auto sm:order-1">
-                  <button
-                    type="button"
-                    onClick={prevSlide}
-                    className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border border-[rgba(148,163,184,0.9)] bg-[rgba(255,255,255,0.96)] text-[0.9rem] transition-all hover:-translate-y-0.5 hover:bg-[#e4edf8] hover:shadow-[0_10px_24px_rgba(15,23,42,0.28)] active:scale-95 sm:h-8 sm:w-8"
-                    aria-label="Previous slide"
-                  >
-                    <ChevronLeft className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={nextSlide}
-                    className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border border-[rgba(148,163,184,0.9)] bg-[rgba(255,255,255,0.96)] text-[0.9rem] transition-all hover:-translate-y-0.5 hover:bg-[#e4edf8] hover:shadow-[0_10px_24px_rgba(15,23,42,0.28)] active:scale-95 sm:h-8 sm:w-8"
-                    aria-label="Next slide"
-                  >
-                    <ChevronRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                  </button>
-                </div>
-                <Badge className="pointer-events-auto order-1 whitespace-nowrap rounded-full border border-[rgba(148,163,184,0.6)] bg-[rgba(255,255,255,0.96)] px-2 py-1 text-[0.7rem] text-[#6b7280] sm:order-2 sm:px-3 sm:py-1.5 sm:text-[0.74rem]">
-                  Click arrows to explore
-                </Badge>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <BookNowModal
+                source="home-hero-book-now"
+                triggerLabel="Book Now"
+                triggerClassName="inline-flex w-full items-center justify-center rounded-2xl bg-[#1F3A5F] px-6 py-3 text-sm font-semibold text-white shadow-md transition duration-300 hover:scale-105 hover:bg-[#3F7F72] sm:w-auto"
+              />
+              <Link
+                href="/case-studies"
+                className="inline-flex w-full items-center justify-center rounded-2xl border border-[#A8C7E6]/60 bg-white px-6 py-3 text-sm font-semibold text-[#1F3A5F] transition duration-300 hover:scale-105 hover:bg-[#E9E3D5] sm:w-auto"
+              >
+                See Editing Samples
+              </Link>
+              <a
+                href="/brochure/RESEARCHEDIT4U_Brochure.pdf"
+                download="RESEARCHEDIT4U_Brochure.pdf"
+                className="inline-flex w-full items-center justify-center rounded-2xl border border-[#A8C7E6]/60 bg-white px-6 py-3 text-sm font-semibold text-[#1F3A5F] transition duration-300 hover:scale-105 hover:bg-[#E9E3D5] sm:w-auto"
+              >
+                Download Brochure
+              </a>
+            </div>
+
+            <div className="mt-7 flex flex-wrap gap-6 text-xs text-[#2A2E35]/80">
+              <div>
+                <strong className="block text-sm font-semibold text-[#2A2E35]">Fast turnarounds</strong>
+                24-72 hours for most editing jobs.
+              </div>
+              <div>
+                <strong className="block text-sm font-semibold text-[#2A2E35]">Ethical and transparent</strong>
+                COPE-aligned support - no ghostwriting.
+              </div>
+              <div>
+                <strong className="block text-sm font-semibold text-[#2A2E35]">Proven outcomes</strong>
+                4,051+ researchers helped, 200+ acceptances.
               </div>
             </div>
           </div>
+
+          <section
+            className="relative rounded-2xl border border-[#A8C7E6]/60 bg-[radial-gradient(circle_at_top_left,#ffffff_0,#A8C7E6_45%,#E9E3D5_100%)] p-5 shadow-[0_20px_50px_rgba(15,23,42,.10)]"
+            aria-label="Key services carousel"
+          >
+            <div className="mb-4 flex flex-wrap items-center gap-3 text-[11px] text-black sm:flex-nowrap sm:justify-between">
+              <div
+                className="max-w-full rounded-full border border-[rgba(148,163,184,.5)] bg-[#A8C7E6]/30 px-3 py-1"
+                aria-live="polite"
+              >
+                {slideLabel}
+              </div>
+              <div className="flex items-center gap-1.5" aria-hidden>
+                {HERO_SLIDES.map((_, index) => (
+                  <span
+                    key={index}
+                    className={`h-[7px] rounded-full ${
+                      index === activeIndex ? "w-4 bg-[#1F3A5F]" : "w-[7px] bg-[rgba(148,163,184,.8)]"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {HERO_SLIDES.map((slide, index) => (
+              <article
+                key={slide.label}
+                className={`grid gap-5 md:grid-cols-[1.05fr_1.15fr] md:items-center ${
+                  index === activeIndex ? "" : "hidden"
+                }`}
+                aria-hidden={index === activeIndex ? "false" : "true"}
+              >
+                <div>
+                  <h2
+                    className={`${
+                      index === 0
+                        ? "!text-[28px] md:!text-[30px] lg:!text-[32px]"
+                        : index === 1
+                          ? "!text-[18px] md:!text-[17px] lg:!text-[18px]"
+                          : "!text-[22px] md:!text-[23px] lg:!text-[24px]"
+                    } ${
+                      index === 1
+                        ? "whitespace-pre-line tracking-[-0.01em] text-black max-w-[20ch]"
+                        : "text-black"
+                    } font-semibold ${
+                      index === 3 ? "leading-[1.08] whitespace-pre-line" : "leading-[1.15]"
+                    }`}
+                  >
+                    {slide.title}
+                  </h2>
+                  <p className="mt-2 text-sm text-black">{slide.copy}</p>
+                  <div className="mt-3 flex flex-wrap gap-2 text-[11px]">
+                    {slide.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full bg-[#A8C7E6]/25 px-2.5 py-1 text-black"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <Link
+                    href={slide.href}
+                    className="mt-4 inline-flex items-center gap-1 whitespace-pre-line text-xs font-semibold text-black"
+                  >
+                    {slide.cta}
+                  </Link>
+                </div>
+
+                <div className="overflow-hidden rounded-xl border border-[rgba(15,23,42,.4)] bg-white aspect-[13/9]">
+                  <SlideImage
+                    src={slide.imageSrc}
+                    fallbackSrc={slide.imageFallbackSrc}
+                    alt={slide.imageAlt}
+                    priority={index === 0}
+                    className="h-full w-full object-cover object-center"
+                  />
+                </div>
+              </article>
+            ))}
+
+            <div className="mt-4 flex items-center gap-3">
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={goPrev}
+                  onMouseEnter={stopAutoRotate}
+                  className="grid h-8 w-8 place-items-center rounded-full border border-[#A8C7E6]/70 bg-white text-black shadow-sm hover:bg-[#E9E3D5]"
+                  aria-label="Previous slide"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={goNext}
+                  onMouseEnter={stopAutoRotate}
+                  className="grid h-8 w-8 place-items-center rounded-full border border-[#A8C7E6]/70 bg-white text-black shadow-sm hover:bg-[#E9E3D5]"
+                  aria-label="Next slide"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </section>

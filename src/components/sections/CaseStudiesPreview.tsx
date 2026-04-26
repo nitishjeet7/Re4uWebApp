@@ -5,51 +5,51 @@ import { Card, CardContent } from "@/components/ui/card";
 export function CaseStudiesPreview({ studies }: { studies: CaseStudy[] }) {
   return (
     <section
-      className="py-8 md:py-14"
+      className="section-pad"
       style={{
         background:
-          "radial-gradient(1100px 520px at 20% -10%, rgba(14, 165, 164, .12), transparent 60%), radial-gradient(900px 520px at 90% -10%, rgba(11, 45, 92, .10), transparent 55%), #f6f9fe",
+          "radial-gradient(1100px 520px at 20% -10%, rgba(168,199,230,.25), transparent 60%), radial-gradient(900px 520px at 90% -10%, rgba(63,127,114,.14), transparent 55%), linear-gradient(180deg, rgba(255,255,255,.98), rgba(233,227,213,.45))",
       }}
     >
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
+      <div className="mx-auto max-w-7xl px-6">
         <div className="mb-8 flex items-center justify-between">
           <div>
-            <div className="mb-2.5 text-xs uppercase tracking-[0.18em] text-[#5a6980]">
+            <div className="mb-2.5 text-xs uppercase tracking-[0.18em] text-[#2A2E35]/70">
               Success Stories
             </div>
-            <h2 className="m-0 text-3xl font-bold leading-[1.12] tracking-[-0.02em] md:text-[34px]">
-              Case Studies
+            <h2 className="m-0 text-3xl font-bold leading-[1.12] tracking-[-0.02em] text-[#1F3A5F] md:text-[34px]">
+              Case Stories
             </h2>
-            <p className="mt-2.5 text-[15.5px] leading-relaxed text-[#5a6980]">
-              Real outcomes from researchers we&apos;ve supported.
+            <p className="mt-2.5 text-[15.5px] leading-relaxed text-[#2A2E35]/80">
+              Real anonymised outcomes from researchers we&apos;ve supported.
             </p>
           </div>
           <Link
             href="/case-studies"
-            className="whitespace-nowrap text-sm font-semibold text-[#0b2d5c] hover:underline hover:text-[#0b3c71]"
+            className="whitespace-nowrap text-sm font-semibold text-[#1F3A5F] hover:text-[#3F7F72] hover:underline"
           >
-            View all →
+            View all stories &rarr;
           </Link>
         </div>
         <div className="grid gap-6 md:grid-cols-2">
           {studies.map((study) => (
             <Card
               key={study.id}
-              className="overflow-hidden rounded-[18px] border border-[#d7e0ee] bg-white shadow-[0_12px_30px_rgba(11,18,32,.08)] transition-all hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(11,18,32,.06)]"
+              className="overflow-hidden rounded-2xl border border-[#A8C7E6]/60 bg-white shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#3F7F72]/40 hover:shadow-xl"
             >
               <CardContent className="p-5">
-                <h3 className="mb-2 text-lg font-bold text-[#0b1220]">
+                <h3 className="mb-2 text-lg font-bold text-[#1F3A5F]">
                   {study.title}
                 </h3>
-                <p className="mb-4 text-sm leading-relaxed text-[#5a6980]">
+                <p className="mb-4 text-sm leading-relaxed text-[#2A2E35]/80">
                   {study.summary}
                 </p>
                 <Link
                   href={`/case-studies/${study.slug}`}
-                  className="inline-flex items-center gap-1 text-sm font-bold text-[#0b2d5c] hover:text-[#0ea5a4] hover:underline"
+                  className="inline-flex items-center gap-1 text-sm font-bold text-[#1F3A5F] hover:text-[#3F7F72] hover:underline"
                 >
-                  Read more
-                  <span>→</span>
+                  View story
+                  <span>&rarr;</span>
                 </Link>
               </CardContent>
             </Card>

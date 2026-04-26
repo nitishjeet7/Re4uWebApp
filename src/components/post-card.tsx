@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import type { Post } from "@/lib/types";
-import { getAssetUrl } from "@/lib/directus";
 import { PostMeta } from "@/components/post-meta";
 import { TagPill } from "@/components/tag-pill";
 
@@ -10,7 +9,7 @@ type PostCardProps = {
 };
 
 export function PostCard({ post }: PostCardProps) {
-  const coverUrl = getAssetUrl(post.cover_image);
+  const coverUrl = post.cover_image ?? null;
 
   return (
     <Card className="group h-full overflow-hidden border-border/70 bg-card/80 transition hover:-translate-y-1 hover:shadow-lg">

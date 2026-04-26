@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { Card } from "@/components/ui/card";
+import { useMemo, useRef, useState } from "react";
 
-const steps = [
+const STEPS = [
   {
     short: "Submit",
     name: "Submit requirement",
@@ -16,20 +15,20 @@ const steps = [
     name: "Expert review",
     title: "Expert review",
     body: "We match your work with a PhD-level specialist in your field for an initial review.",
-    note: "PhD-matched",
+    note: "PhD matched",
   },
   {
     short: "Quote",
-    name: "Quote & confirmation",
-    title: "Quote & confirmation",
+    name: "Quote and confirmation",
+    title: "Quote and confirmation",
     body: "Receive a transparent quote, timeline, and scope breakdown before we start.",
     note: "Transparent quote",
   },
   {
-    short: "Edit & QC",
-    name: "Editing & QC",
-    title: "Editing & QC",
-    body: "Your editor works on the file, followed by an internal quality-check to ensure consistency.",
+    short: "Edit and QC",
+    name: "Editing and QC",
+    title: "Editing and QC",
+    body: "Your editor works on the file, followed by an internal quality check to ensure consistency.",
     note: "Two-layer QC",
   },
   {
@@ -37,149 +36,234 @@ const steps = [
     name: "Final delivery",
     title: "Final delivery",
     body: "Get clean and tracked-changes files, plus support for queries until submission.",
-    note: "Submission-ready",
+    note: "Submission ready",
   },
 ];
 
+const TOTAL_STEPS = STEPS.length;
+
+function clamp(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function buildDeckIndices(activeIndex: number) {
+  const idxs: number[] = [];
+  if (activeIndex - 1 >= 0) idxs.push(activeIndex - 1);
+  idxs.push(activeIndex);
+  if (activeIndex + 1 < TOTAL_STEPS) idxs.push(activeIndex + 1);
+
+  while (idxs.length < 3) {
+    const candidate = idxs[0] === 0 ? idxs[idxs.length - 1] + 1 : idxs[0] - 1;
+    if (candidate >= 0 && candidate < TOTAL_STEPS && !idxs.includes(candidate)) {
+      if (idxs[0] === 0) {
+        idxs.push(candidate);
+      } else {
+        idxs.unshift(candidate);
+      }
+    } else {
+      break;
+    }
+  }
+
+  return idxs.slice(0, 3);
+}
+
 export function HowItWorks() {
   const [activeStep, setActiveStep] = useState(0);
+  const touchStartX = useRef(0);
+  const touchDeltaX = useRef(0);
+  const touchActive = useRef(false);
 
-  const activeStepData = steps[activeStep];
-  const visibleSteps = [
-    activeStep > 0 ? steps[activeStep - 1] : steps[steps.length - 1],
-    steps[activeStep],
-    activeStep < steps.length - 1 ? steps[activeStep + 1] : steps[0],
-  ]
-    .filter(Boolean)
-    .slice(0, 3);
+  const deckIndices = useMemo(() => buildDeckIndices(activeStep), [activeStep]);
+  const trackFill = TOTAL_STEPS > 1 ? (activeStep / (TOTAL_STEPS - 1)) * 100 : 0;
+
+  function setActive(index: number) {
+    setActiveStep(clamp(index, 0, TOTAL_STEPS - 1));
+  }
+
+  function handleTouchStart(event: React.TouchEvent<HTMLDivElement>) {
+    if (event.touches.length !== 1) return;
+    touchActive.current = true;
+    touchStartX.current = event.touches[0].clientX;
+    touchDeltaX.current = 0;
+  }
+
+  function handleTouchMove(event: React.TouchEvent<HTMLDivElement>) {
+    if (!touchActive.current || event.touches.length !== 1) return;
+    touchDeltaX.current = event.touches[0].clientX - touchStartX.current;
+  }
+
+  function handleTouchEnd() {
+    if (!touchActive.current) return;
+    touchActive.current = false;
+    const threshold = 45;
+    if (touchDeltaX.current > threshold) {
+      setActive(activeStep - 1);
+    } else if (touchDeltaX.current < -threshold) {
+      setActive(activeStep + 1);
+    }
+    touchDeltaX.current = 0;
+  }
 
   return (
-    <section
-      id="sec-process"
-      className="py-7 md:py-9"
-      style={{
-        background:
-          "radial-gradient(900px 450px at 25% 0%, rgba(10, 166, 166, .08), transparent 55%), radial-gradient(900px 450px at 85% 10%, rgba(11, 58, 120, .10), transparent 55%), #f3f6fb",
-      }}
-    >
-      <div className="mx-auto max-w-[1180px] px-4 sm:px-6">
-        <div className="overflow-hidden rounded-[26px] border border-[rgba(215,222,234,.9)] bg-[rgba(255,255,255,.55)] shadow-[0_10px_30px_rgba(13,28,56,.08)]">
-          <div className="p-5 md:p-6">
-            <div className="grid max-md:grid-cols-1 grid-cols-[1.2fr_0.8fr] gap-5">
+    <section id="sec-process" className="section-pad">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="rounded-2xl border border-[#A8C7E6]/55 bg-white/85 shadow-[0_10px_30px_rgba(13,28,56,.08)]">
+          <div className="px-5 pb-5 pt-6 sm:px-6">
+            <div className="grid gap-6">
               <div>
-                <div className="mb-2.5 text-xs uppercase tracking-[0.18em] text-[#5a677f]">
-                  How it works
+                <div className="text-xs uppercase tracking-[0.18em] text-[#2A2E35]/70">
+                  A SIMPLE PROCESS WITH POWERFUL RESULT
                 </div>
-                <h2 className="m-0 mb-2.5 text-2xl font-bold leading-[1.15] md:text-[34px]">
-                  A reliable workflow built for academic deadlines.
+                <h2 className="mt-2 text-[22px] font-bold leading-[1.15] text-[#1F3A5F] md:text-[34px]">
+                  From upload to submission-ready in five clear steps.
                 </h2>
-                <p className="mt-1 text-[15.5px] leading-relaxed text-[#5a677f]">
-                  From intake to delivery, we keep you informed at every step with
-                  transparent timelines and clear communication.
-                </p>
               </div>
             </div>
 
-            <div className="mt-4.5 rounded-[20px] border border-[rgba(215,222,234,.95)] bg-[rgba(255,255,255,.65)] p-4">
-              <div className="mb-3 flex items-center justify-between gap-3.5">
-                <div className="flex items-center gap-2.5 text-[13px] text-[#5a677f]">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(215,222,234,.95)] bg-[rgba(255,255,255,.8)] px-2.5 py-2">
-                    <b className="font-bold text-[#0b1633]">Step {activeStep + 1}</b>
-                    <span aria-hidden>•</span>
-                    <span>{activeStepData.note}</span>
-                  </div>
+            <div className="mt-5 rounded-2xl border border-[#A8C7E6]/55 bg-white/90 px-4 py-4">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex flex-wrap items-center gap-2 text-xs text-[#2A2E35]/70">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[#A8C7E6]/55 bg-white/80 px-3 py-1.5">
+                    <b className="text-[#1F3A5F]">Step {activeStep + 1}</b>
+                    <span aria-hidden> - </span>
+                    <span>{STEPS[activeStep].name}</span>
+                  </span>
+                  <span className="hidden text-[12.5px] sm:inline">
+                    Click a step to jump.
+                  </span>
+                  <span className="text-[12.5px] sm:hidden">
+                    Swipe the card to change steps.
+                  </span>
                 </div>
-                <div className="whitespace-nowrap text-xs text-[#5a677f] max-md:hidden">
-                  Click steps to explore
+                <div className="hidden text-[12.5px] text-[#2A2E35]/70 md:block">
+                  Step {activeStep + 1} of {TOTAL_STEPS}
                 </div>
               </div>
 
-              <div className="relative px-2.5 py-4.5">
+              <div className="relative mt-4 px-2 pb-2 pt-4">
+                <div className="absolute left-4 right-4 top-[28px] hidden h-[2px] rounded-full bg-[#A8C7E6]/45 md:block" />
                 <div
-                  className="absolute left-4 right-4 top-7 h-0.5 rounded-full"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, rgba(11, 58, 120, .18), rgba(10, 166, 166, .18))",
-                  }}
+                  className="absolute left-4 top-[28px] hidden h-[2px] rounded-full bg-[#3F7F72] transition-[width] duration-300 md:block"
+                  style={{ width: `calc(${trackFill}% - 0px)` }}
                 />
-                <div
-                  className="absolute left-4 top-7 h-0.5 rounded-full transition-all duration-500"
-                  style={{
-                    width: `${(activeStep / (steps.length - 1)) * 100}%`,
-                    background: "linear-gradient(90deg, #0b3a78, #0aa6a6)",
-                  }}
-                />
-                <div className="relative z-10 grid grid-cols-5 gap-2.5">
-                  {steps.map((step, index) => (
+
+                <div className="relative z-10 -mx-2 flex gap-3 overflow-x-auto px-2 pb-1 md:mx-0 md:grid md:grid-cols-5 md:gap-2 md:overflow-visible md:px-0 md:pb-0">
+                  {STEPS.map((step, index) => (
                     <button
-                      key={index}
+                      key={step.short}
                       type="button"
-                      onClick={() => setActiveStep(index)}
-                      className="min-h-[54px] cursor-pointer appearance-none border-0 bg-transparent p-0 text-center"
-                      aria-current={index === activeStep ? "true" : "false"}
+                      onClick={() => setActive(index)}
+                      aria-current={index === activeStep}
+                      className="group flex min-w-[68px] flex-col items-center text-center md:min-w-0"
                     >
-                      <div
-                        className={`mx-auto mb-1.5 grid h-[34px] w-[34px] place-items-center rounded-full border text-[13px] font-extrabold transition-all ${
+                      <span
+                        className={`mb-2 grid h-9 w-9 place-items-center rounded-full border text-sm font-bold transition ${
                           index === activeStep
-                            ? "border-[rgba(11,58,120,.35)] bg-gradient-to-b from-[rgba(11,58,120,.14)] to-[rgba(10,166,166,.10)] text-[#0b1633] shadow-[0_14px_26px_rgba(11,58,120,.12)]"
-                            : "border-[rgba(215,222,234,1)] bg-[rgba(255,255,255,.9)] text-[#0b3a78] hover:-translate-y-0.5 hover:shadow-[0_10px_20px_rgba(13,28,56,.08)]"
+                            ? "border-[#3F7F72]/45 bg-[#A8C7E6]/25 text-[#1F3A5F] shadow-md"
+                          : "border-[#A8C7E6]/60 bg-white/90 text-[#1F3A5F]"
                         }`}
                       >
                         {index + 1}
-                      </div>
-                      <div
-                        className={`overflow-hidden text-ellipsis whitespace-nowrap px-1.5 text-[12.5px] leading-[1.15] ${
-                          index === activeStep
-                            ? "font-bold text-[#0b1633]"
-                            : "text-[#5a677f]"
+                      </span>
+                      <span
+                        className={`text-[11px] sm:text-[12.5px] ${
+                          index === activeStep ? "font-bold text-[#1F3A5F]" : "text-[#2A2E35]/70"
                         }`}
                       >
                         {step.short}
-                      </div>
+                      </span>
                     </button>
                   ))}
                 </div>
               </div>
 
-              <div className="mt-3.5">
-                <div className="mb-0.5 flex items-center justify-between gap-3">
-                  <h3 className="m-0 text-[15.5px] font-extrabold tracking-[0.01em]">
-                    {activeStepData.title}
-                  </h3>
-                  <div className="flex flex-wrap items-center justify-end gap-2.5 text-xs text-[#5a677f]">
-                    <span>
-                      Step {activeStep + 1} of {steps.length}
+              <div className="mt-4">
+                <div className="flex flex-wrap items-center justify-between gap-2 px-1">
+                  <div className="text-sm font-extrabold text-[#1F3A5F]">What happens in this step</div>
+                  <div className="text-xs text-[#2A2E35]/70">
+                    <span className="rounded-xl border border-[#A8C7E6]/60 bg-white/85 px-2.5 py-1">
+                      {STEPS[activeStep].note}
                     </span>
                   </div>
                 </div>
-                <div className="mt-3.5 grid grid-cols-1 gap-3 md:grid-cols-3">
-                  {visibleSteps.map((step, idx) => (
-                    <Card
-                      key={idx}
-                      className="relative min-h-[124px] overflow-hidden rounded-[18px] border border-[rgba(215,222,234,.95)] bg-white p-3.5 shadow-[0_10px_22px_rgba(13,28,56,.06)]"
-                    >
-                      <div className="relative z-10">
-                        <div className="mb-2 flex items-center justify-between gap-2.5">
-                          <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(215,222,234,1)] bg-[rgba(243,246,251,.8)] px-2.5 py-1.5 text-xs text-[#5a677f]">
-                            <b className="text-[#0b1633]">
-                              {steps.indexOf(step) + 1}
-                            </b>
-                            <span aria-hidden>•</span>
-                            <span>{step.name}</span>
+
+                <div className="mt-3 hidden grid-cols-1 gap-3 md:grid md:grid-cols-3">
+                  {deckIndices.map((index) => {
+                    const step = STEPS[index];
+                    return (
+                      <article
+                        key={step.title}
+                        className="relative overflow-hidden rounded-2xl border border-[#A8C7E6]/55 bg-white p-4 shadow-md"
+                      >
+                        <div className="absolute -right-16 -top-16 h-[200px] w-[200px] rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(63,127,114,.20),transparent_60%),radial-gradient(circle_at_60%_55%,rgba(168,199,230,.26),transparent_62%)] opacity-80" />
+                        <div className="relative z-10">
+                          <div className="mb-2 flex items-center justify-between gap-2">
+                            <span className="inline-flex items-center gap-2 rounded-full border border-[#A8C7E6]/60 bg-[#E9E3D5]/35 px-2.5 py-1 text-xs text-[#2A2E35]/70">
+                              <b className="text-[#1F3A5F]">{index + 1}</b>
+                              <span aria-hidden> - </span>
+                              {step.name}
+                            </span>
+                            <span className="text-xs text-[#2A2E35]/70">Step {index + 1} of {TOTAL_STEPS}</span>
                           </div>
-                          <span className="text-xs text-[#5a677f]">
-                            Step {steps.indexOf(step) + 1} of {steps.length}
-                          </span>
+                          <h3 className="text-[15.5px] font-semibold text-[#1F3A5F]">{step.title}</h3>
+                          <p className="mt-1 text-[13.5px] leading-relaxed text-[#2A2E35]/70">
+                            {step.body}
+                          </p>
                         </div>
-                        <h4 className="m-0 mb-1.5 text-[15.5px] font-semibold tracking-[0.01em]">
-                          {step.title}
-                        </h4>
-                        <p className="m-0 text-[13.5px] leading-relaxed text-[#5a677f]">
-                          {step.body}
-                        </p>
-                      </div>
-                    </Card>
-                  ))}
+                      </article>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-3 block md:hidden">
+                  <div
+                    className="overflow-hidden rounded-2xl"
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                    style={{ touchAction: "pan-y" }}
+                  >
+                    <div
+                      className="flex transition-transform duration-300"
+                      style={{ transform: `translateX(${-activeStep * 100}%)` }}
+                    >
+                      {STEPS.map((step, index) => (
+                        <div key={step.title} className="w-full flex-shrink-0 px-1.5">
+                          <article className="relative overflow-hidden rounded-2xl border border-[#A8C7E6]/55 bg-white p-4 shadow-md">
+                            <div className="absolute -right-16 -top-16 h-[200px] w-[200px] rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(63,127,114,.20),transparent_60%),radial-gradient(circle_at_60%_55%,rgba(168,199,230,.26),transparent_62%)] opacity-80" />
+                            <div className="relative z-10">
+                              <div className="mb-2 flex items-center justify-between gap-2">
+                                <span className="inline-flex items-center gap-2 rounded-full border border-[#A8C7E6]/60 bg-[#E9E3D5]/35 px-2.5 py-1 text-xs text-[#2A2E35]/70">
+                                  <b className="text-[#1F3A5F]">{index + 1}</b>
+                                  <span aria-hidden> - </span>
+                                  {step.name}
+                                </span>
+                                <span className="text-xs text-[#2A2E35]/70">Step {index + 1} of {TOTAL_STEPS}</span>
+                              </div>
+                              <h3 className="text-[15.5px] font-semibold text-[#1F3A5F]">{step.title}</h3>
+                              <p className="mt-1 text-[13.5px] leading-relaxed text-[#2A2E35]/70">
+                                {step.body}
+                              </p>
+                            </div>
+                          </article>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-3 flex items-center justify-center gap-2">
+                    {STEPS.map((_, index) => (
+                      <span
+                        key={index}
+                        className={`h-2 w-2 rounded-full ${
+                          index === activeStep
+                            ? "bg-[#3F7F72]"
+                            : "bg-[#A8C7E6]/70"
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

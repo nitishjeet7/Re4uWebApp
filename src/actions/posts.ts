@@ -1,4 +1,4 @@
-import { getLatestPosts, getAssetUrl } from "@/lib/directus";
+import { getLatestPosts } from "@/lib/blog";
 
 export type PublishedPost = {
   id: string;
@@ -16,7 +16,7 @@ export async function getPublishedPosts(limit = 10): Promise<PublishedPost[]> {
     title: post.title,
     excerpt: post.excerpt ?? "",
     slug: post.slug,
-    featured_image: getAssetUrl(post.cover_image) ?? null,
+    featured_image: post.cover_image ?? null,
     tags: post.tags?.map((t) => t.name),
   }));
 }
